@@ -1,0 +1,40 @@
+# robots.txt — https://bkaratas.dev
+# Tüm arama motorlarına ve tarayıcılara açıktır.
+
+User-agent: *
+Allow: /
+Disallow: /assets/og-source.html
+
+# --- Arama motorları ---
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# --- Yapay zekâ / özetleyiciler (içerik taranabilir) ---
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://bkaratas.dev/sitemap.xml

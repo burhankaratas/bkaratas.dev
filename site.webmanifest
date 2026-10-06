@@ -1,0 +1,28 @@
+{
+  "name": "Mahmut Burhan Karataş — Yazılım Geliştirici",
+  "short_name": "bkaratas.dev",
+  "description": "Python, Flask ve Next.js ile ürün geliştiren yazılım geliştirici. Sehven Dergi ve Hesaplarız.org projelerinin arkasındaki isim.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a0a0b",
+  "theme_color": "#0a0a0b",
+  "lang": "tr",
+  "dir": "ltr",
+  "categories": ["portfolio", "developer", "technology"],
+  "icons": [
+    {
+      "src": "/assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
