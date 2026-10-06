@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Mahmut Burhan Karataş — Yazılım Geliştirici</title>
+  <meta name="description" content="Mahmut Burhan Karataş — temiz kod, otomasyon ve faydalı ürünler kuran yazılım geliştirici. Sehven Dergi ve Hesaplarız.org projeleri.">
+  <link rel="canonical" href="https://bkaratas.dev/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mahmut Burhan Karataş — Yazılım Geliştirici">
+  <meta property="og:description" content="Temiz kod, otomasyon ve faydalı ürünler kuran yazılım geliştirici. Sehven Dergi ve Hesaplarız.org projeleri.">
+  <meta property="og:url" content="https://bkaratas.dev/">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:site_name" content="bkaratas.dev">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#0a0a0b">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#icerik" data-i18n="a11y.skip">İçeriğe geç</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#anasayfa" aria-label="bkaratas.dev">
+        <span class="brand-mark">MBK</span>
+        <span class="brand-name">bkaratas.dev</span>
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" data-i18n="nav.menu">Menü</button>
+
+      <nav id="site-nav" class="site-nav">
+        <a href="#hakkimda" data-i18n="nav.about">Hakkımda</a>
+        <a href="#yetenekler" data-i18n="nav.skills">Yetenekler</a>
+        <a href="#projeler" data-i18n="nav.projects">Projeler</a>
+        <a href="#iletisim" data-i18n="nav.contact">İletişim</a>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang="tr" class="is-active">TR</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="icerik">
+
+    <!-- HERO -->
+    <section id="anasayfa" class="hero">
+      <div class="container">
+        <div class="monogram reveal" aria-hidden="true">MBK</div>
+
+        <h1 class="reveal">Mahmut Burhan Karataş</h1>
+        <p class="hero-role reveal" data-i18n="hero.role">Yazılım Geliştirici</p>
+        <p class="hero-tagline reveal" data-i18n="hero.tagline">
+          Temiz kod, otomasyon ve gerçekten işe yarayan ürünler kuran bir geliştirici.
+          Fikri alıp çalışan web sitelerine ve araçlara dönüştürüyorum.
+        </p>
+
+        <div class="hero-actions reveal">
+          <a class="btn btn-primary" href="#projeler" data-i18n="hero.ctaProjects">Projeleri Gör</a>
+          <a class="btn btn-ghost" href="#iletisim" data-i18n="hero.ctaContact">İletişime Geç</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAKKIMDA -->
+    <section id="hakkimda" class="section">
+      <div class="container">
+        <p class="section-label reveal"><span>01</span> <span data-i18n="about.label">Hakkımda</span></p>
+
+        <div class="about-grid">
+          <div class="about-text">
+            <h2 class="reveal" data-i18n="about.title">Kısaca ben</h2>
+            <p class="reveal" data-i18n="about.p1">
+              Merhaba, ben Burhan. Backend tarafında Python ve Flask ile ölçeklenebilir sistemler
+              kurmayı; arayüz tarafında ise sade, hızlı ve erişilebilir web deneyimleri geliştirmeyi
+              seviyorum.
+            </p>
+            <p class="reveal" data-i18n="about.p2">
+              Sehven Dergi ve Hesaplarız.org gibi projelerimi uçtan uca tasarlayıp hayata
+              geçiriyorum: fikirden arayüze, veritabanından yayına kadar her aşamasında çalışıyorum.
+            </p>
+          </div>
+
+          <ul class="facts reveal">
+            <li>
+              <span class="fact-key" data-i18n="about.factLocation">Konum</span>
+              <span class="fact-value">Atakum, Samsun</span>
+            </li>
+            <li>
+              <span class="fact-key" data-i18n="about.factFocus">Odak</span>
+              <span class="fact-value" data-i18n="about.factFocusValue">Backend &amp; ürün geliştirme</span>
+            </li>
+            <li>
+              <span class="fact-key" data-i18n="about.factStatus">Durum</span>
+              <span class="fact-value" data-i18n="about.factStatusValue">Yeni fırsatlara açık</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- YETENEKLER -->
+    <section id="yetenekler" class="section section-alt">
+      <div class="container">
+        <p class="section-label reveal"><span>02</span> <span data-i18n="skills.label">Yetenekler</span></p>
+        <h2 class="reveal" data-i18n="skills.title">Kullandığım teknolojiler</h2>
+        <p class="section-intro reveal" data-i18n="skills.intro">
+          Projelerimde düzenli olarak kullandığım diller, kütüphaneler ve araçlar.
+        </p>
+
+        <div class="skills-grid">
+          <div class="skill-group reveal">
+            <h3 data-i18n="skills.g1">Diller &amp; Web</h3>
+            <ul class="chips">
+              <li>HTML5</li><li>CSS3</li><li>JavaScript</li><li>React</li><li>Next.js</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal">
+            <h3 data-i18n="skills.g2">Arka Uç</h3>
+            <ul class="chips">
+              <li>Python</li><li>Flask</li><li>REST API</li><li>JWT</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal">
+            <h3 data-i18n="skills.g3">Veritabanı</h3>
+            <ul class="chips">
+              <li>MySQL</li><li>SQLite</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal">
+            <h3 data-i18n="skills.g4">Araçlar &amp; Platform</h3>
+            <ul class="chips">
+              <li>Git / GitHub</li><li>Vercel</li><li>Cloudflare</li><li>Figma</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJELER -->
+    <section id="projeler" class="section">
+      <div class="container">
+        <p class="section-label reveal"><span>03</span> <span data-i18n="projects.label">Projeler</span></p>
+        <h2 class="reveal" data-i18n="projects.title">Yaptığım işler</h2>
+        <p class="section-intro reveal" data-i18n="projects.intro">
+          Tasarlayıp yayına aldığım kendi projelerim.
+        </p>
+
+        <div class="projects-grid">
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <span class="project-domain">sehvendergisi.com.tr</span>
+              <span class="project-year">2026</span>
+            </div>
+            <h3>Sehven</h3>
+            <p data-i18n="projects.p1.desc">
+              Bağımsız bir dijital edebiyat ve felsefe dergisi. Yazılar, sayılar, yazar
+              profilleri ve editör paneliyle uçtan uca çalışan, monokrom bir yayın estetiğine
+              sahip yayın platformu.
+            </p>
+            <ul class="chips chips-sm">
+              <li>Next.js</li><li>React</li><li>Vercel</li>
+            </ul>
+            <a class="project-link" href="https://sehvendergisi.com.tr" target="_blank" rel="noopener">
+              <span data-i18n="projects.visit">Siteyi Aç</span> <span aria-hidden="true">↗</span>
+            </a>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <span class="project-domain">hesaplariz.org</span>
+              <span class="project-year">2026</span>
+            </div>
+            <h3>Hesaplarız</h3>
+            <p data-i18n="projects.p2.desc">
+              30'dan fazla aracı tek sitede toplayan ücretsiz hesaplama koleksiyonu: finans,
+              sağlık, tarih, ölçü ve daha fazlası. Tüm hesaplamalar tamamen tarayıcıda,
+              kayıt gerekmeden çalışır.
+            </p>
+            <ul class="chips chips-sm">
+              <li>Next.js</li><li>JavaScript</li><li>Vercel</li>
+            </ul>
+            <a class="project-link" href="https://hesaplariz.org" target="_blank" rel="noopener">
+              <span data-i18n="projects.visit">Siteyi Aç</span> <span aria-hidden="true">↗</span>
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- İLETİŞİM -->
+    <section id="iletisim" class="section section-alt">
+      <div class="container">
+        <p class="section-label reveal"><span>04</span> <span data-i18n="contact.label">İletişim</span></p>
+        <h2 class="reveal" data-i18n="contact.title">Birlikte çalışalım</h2>
+        <p class="section-intro reveal" data-i18n="contact.desc">
+          Proje fikriniz, iş birliği ya da sadece merhaba demek için — her zaman açığım.
+        </p>
+
+        <div class="contact-list reveal">
+          <a class="contact-item" href="mailto:burhankaratas771@gmail.com">
+            <span class="contact-kind">E-posta</span>
+            <span class="contact-value">burhankaratas771@gmail.com</span>
+          </a>
+          <a class="contact-item" href="https://github.com/burhankaratas" target="_blank" rel="noopener">
+            <span class="contact-kind">GitHub</span>
+            <span class="contact-value">github.com/burhankaratas</span>
+          </a>
+          <a class="contact-item" href="https://www.linkedin.com/in/burhankaratas/" target="_blank" rel="noopener">
+            <span class="contact-kind">LinkedIn</span>
+            <span class="contact-value">in/burhankaratas</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year">2026</span> Mahmut Burhan Karataş · bkaratas.dev</p>
+      <p class="footer-note" data-i18n="footer.note">Vanilla HTML · CSS · JavaScript ile yapıldı.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
