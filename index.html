@@ -20,7 +20,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -30,63 +30,109 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#anasayfa" aria-label="bkaratas.dev">
-        <span class="brand-mark">MBK</span>
-        <span class="brand-name">bkaratas.dev</span>
+        <span class="brand-slash">//</span><span class="brand-name">bkaratas.dev</span>
       </a>
 
       <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" data-i18n="nav.menu">Menü</button>
 
       <nav id="site-nav" class="site-nav">
-        <a href="#hakkimda" data-i18n="nav.about">Hakkımda</a>
-        <a href="#yetenekler" data-i18n="nav.skills">Yetenekler</a>
-        <a href="#projeler" data-i18n="nav.projects">Projeler</a>
-        <a href="#iletisim" data-i18n="nav.contact">İletişim</a>
+        <a href="#hakkimda"><i>01</i><span data-i18n="nav.about">Hakkımda</span></a>
+        <a href="#yetenekler"><i>02</i><span data-i18n="nav.skills">Yetenekler</span></a>
+        <a href="#projeler"><i>03</i><span data-i18n="nav.projects">Projeler</span></a>
+        <a href="#iletisim"><i>04</i><span data-i18n="nav.contact">İletişim</span></a>
         <div class="lang-switch" role="group" aria-label="Language">
           <button type="button" data-lang="tr" class="is-active">TR</button>
           <button type="button" data-lang="en">EN</button>
         </div>
       </nav>
     </div>
+    <div class="scroll-progress" aria-hidden="true"><span id="progress-bar"></span></div>
   </header>
 
   <main id="icerik">
 
     <!-- HERO -->
     <section id="anasayfa" class="hero">
-      <div class="container">
-        <div class="monogram reveal" aria-hidden="true">MBK</div>
+      <div class="container hero-grid">
 
-        <h1 class="reveal">Mahmut Burhan Karataş</h1>
-        <p class="hero-role reveal" data-i18n="hero.role">Yazılım Geliştirici</p>
-        <p class="hero-tagline reveal" data-i18n="hero.tagline">
-          Temiz kod, otomasyon ve gerçekten işe yarayan ürünler kuran bir geliştirici.
-          Fikri alıp çalışan web sitelerine ve araçlara dönüştürüyorum.
-        </p>
+        <div class="hero-copy">
+          <p class="hero-cmd"><span class="prompt">$</span> whoami<span class="caret" aria-hidden="true"></span></p>
 
-        <div class="hero-actions reveal">
-          <a class="btn btn-primary" href="#projeler" data-i18n="hero.ctaProjects">Projeleri Gör</a>
-          <a class="btn btn-ghost" href="#iletisim" data-i18n="hero.ctaContact">İletişime Geç</a>
+          <h1 class="hero-name">
+            Mahmut Burhan<br>Karataş<span class="caret caret-name" aria-hidden="true"></span>
+          </h1>
+
+          <p class="hero-role" data-i18n="hero.role">Yazılım Geliştirici</p>
+
+          <p class="hero-tagline" data-i18n="hero.tagline">
+            Temiz kod, otomasyon ve gerçekten işe yarayan ürünler kuran bir geliştirici.
+            Fikri alıp çalışan web sitelerine ve araçlara dönüştürüyorum.
+          </p>
+
+          <ul class="hero-meta">
+            <li>Atakum, Samsun</li>
+            <li>UTC+03:00</li>
+            <li class="meta-status">
+              <span class="dot" aria-hidden="true"></span>
+              <span data-i18n="hero.available">Yeni fırsatlara açık</span>
+            </li>
+          </ul>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projeler" data-i18n="hero.ctaProjects">Projeleri Gör</a>
+            <a class="btn btn-ghost" href="#iletisim" data-i18n="hero.ctaContact">İletişime Geç</a>
+          </div>
         </div>
+
+        <div class="code-panel reveal" aria-hidden="true">
+          <div class="code-bar">
+            <span class="code-path">~/bkaratas.dev/portfolio.ts</span>
+            <span class="code-dots"><i></i><i></i><i></i></span>
+          </div>
+          <div class="code-body">
+            <div class="code-line"><span class="kw">const</span> dev = {</div>
+            <div class="code-line">&nbsp;&nbsp;<span class="key">name</span>: <span class="str">"Mahmut Burhan Karataş"</span>,</div>
+            <div class="code-line">&nbsp;&nbsp;<span class="key">role</span>: <span class="str">"software developer"</span>,</div>
+            <div class="code-line">&nbsp;&nbsp;<span class="key">stack</span>: [<span class="str">"python"</span>, <span class="str">"flask"</span>, <span class="str">"next.js"</span>],</div>
+            <div class="code-line">&nbsp;&nbsp;<span class="key">shipped</span>: [<span class="str">"sehvendergisi.com.tr"</span>,</div>
+            <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"hesaplariz.org"</span>],</div>
+            <div class="code-line">&nbsp;&nbsp;<span class="key">status</span>: <span class="str">"open to work"</span>,</div>
+            <div class="code-line">};</div>
+            <div class="code-line">&nbsp;</div>
+            <div class="code-line">dev.<span class="fn">ship</span>(); <span class="com">// → bkaratas.dev</span></div>
+          </div>
+        </div>
+
       </div>
     </section>
 
     <!-- HAKKIMDA -->
     <section id="hakkimda" class="section">
       <div class="container">
-        <p class="section-label reveal"><span>01</span> <span data-i18n="about.label">Hakkımda</span></p>
+        <div class="section-label reveal">
+          <span class="sec-num">01</span>
+          <span data-i18n="about.label">Hakkımda</span>
+          <span class="sec-rule"></span>
+        </div>
 
         <div class="about-grid">
-          <div class="about-text">
-            <h2 class="reveal" data-i18n="about.title">Kısaca ben</h2>
-            <p class="reveal" data-i18n="about.p1">
-              Merhaba, ben Burhan. Backend tarafında Python ve Flask ile ölçeklenebilir sistemler
-              kurmayı; arayüz tarafında ise sade, hızlı ve erişilebilir web deneyimleri geliştirmeyi
-              seviyorum.
-            </p>
-            <p class="reveal" data-i18n="about.p2">
-              Sehven Dergi ve Hesaplarız.org gibi projelerimi uçtan uca tasarlayıp hayata
-              geçiriyorum: fikirden arayüze, veritabanından yayına kadar her aşamasında çalışıyorum.
-            </p>
+          <div class="panel reveal">
+            <div class="panel-bar">
+              <span class="panel-name">about.md</span>
+              <span class="panel-meta">UTF-8 · LF</span>
+            </div>
+            <div class="panel-body">
+              <h2 data-i18n="about.title">Kısaca ben</h2>
+              <p data-i18n="about.p1">
+                Merhaba, ben Burhan. Backend tarafında Python ve Flask ile ölçeklenebilir sistemler
+                kurmayı; arayüz tarafında ise sade, hızlı ve erişilebilir web deneyimleri geliştirmeyi
+                seviyorum.
+              </p>
+              <p data-i18n="about.p2">
+                Sehven Dergi ve Hesaplarız.org gibi projelerimi uçtan uca tasarlayıp hayata
+                geçiriyorum: fikirden arayüze, veritabanından yayına kadar her aşamasında çalışıyorum.
+              </p>
+            </div>
           </div>
 
           <ul class="facts reveal">
@@ -102,6 +148,10 @@
               <span class="fact-key" data-i18n="about.factStatus">Durum</span>
               <span class="fact-value" data-i18n="about.factStatusValue">Yeni fırsatlara açık</span>
             </li>
+            <li>
+              <span class="fact-key">GitHub</span>
+              <span class="fact-value">@burhankaratas</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -110,36 +160,38 @@
     <!-- YETENEKLER -->
     <section id="yetenekler" class="section section-alt">
       <div class="container">
-        <p class="section-label reveal"><span>02</span> <span data-i18n="skills.label">Yetenekler</span></p>
+        <div class="section-label reveal">
+          <span class="sec-num">02</span>
+          <span data-i18n="skills.label">Yetenekler</span>
+          <span class="sec-rule"></span>
+        </div>
+
         <h2 class="reveal" data-i18n="skills.title">Kullandığım teknolojiler</h2>
         <p class="section-intro reveal" data-i18n="skills.intro">
           Projelerimde düzenli olarak kullandığım diller, kütüphaneler ve araçlar.
         </p>
 
-        <div class="skills-grid">
-          <div class="skill-group reveal">
-            <h3 data-i18n="skills.g1">Diller &amp; Web</h3>
+        <div class="skill-table reveal">
+          <div class="skill-row">
+            <span class="skill-key" data-i18n="skills.g1">Diller &amp; Web</span>
             <ul class="chips">
               <li>HTML5</li><li>CSS3</li><li>JavaScript</li><li>React</li><li>Next.js</li>
             </ul>
           </div>
-
-          <div class="skill-group reveal">
-            <h3 data-i18n="skills.g2">Arka Uç</h3>
+          <div class="skill-row">
+            <span class="skill-key" data-i18n="skills.g2">Arka Uç</span>
             <ul class="chips">
               <li>Python</li><li>Flask</li><li>REST API</li><li>JWT</li>
             </ul>
           </div>
-
-          <div class="skill-group reveal">
-            <h3 data-i18n="skills.g3">Veritabanı</h3>
+          <div class="skill-row">
+            <span class="skill-key" data-i18n="skills.g3">Veritabanı</span>
             <ul class="chips">
               <li>MySQL</li><li>SQLite</li>
             </ul>
           </div>
-
-          <div class="skill-group reveal">
-            <h3 data-i18n="skills.g4">Araçlar &amp; Platform</h3>
+          <div class="skill-row">
+            <span class="skill-key" data-i18n="skills.g4">Araçlar &amp; Platform</span>
             <ul class="chips">
               <li>Git / GitHub</li><li>Vercel</li><li>Cloudflare</li><li>Figma</li>
             </ul>
@@ -151,50 +203,71 @@
     <!-- PROJELER -->
     <section id="projeler" class="section">
       <div class="container">
-        <p class="section-label reveal"><span>03</span> <span data-i18n="projects.label">Projeler</span></p>
+        <div class="section-label reveal">
+          <span class="sec-num">03</span>
+          <span data-i18n="projects.label">Projeler</span>
+          <span class="sec-rule"></span>
+        </div>
+
         <h2 class="reveal" data-i18n="projects.title">Yaptığım işler</h2>
         <p class="section-intro reveal" data-i18n="projects.intro">
           Tasarlayıp yayına aldığım kendi projelerim.
         </p>
 
-        <div class="projects-grid">
+        <div class="project-list">
 
-          <article class="project-card reveal">
-            <div class="project-top">
-              <span class="project-domain">sehvendergisi.com.tr</span>
-              <span class="project-year">2026</span>
+          <article class="project-row reveal">
+            <span class="pr-index">01</span>
+            <div class="pr-main">
+              <div class="pr-top">
+                <a class="pr-domain" href="https://sehvendergisi.com.tr" target="_blank" rel="noopener">
+                  sehvendergisi.com.tr
+                </a>
+                <span class="pr-status"><i></i><span data-i18n="projects.live">Canlı</span></span>
+              </div>
+              <h3>Sehven</h3>
+              <p data-i18n="projects.p1.desc">
+                Bağımsız bir dijital edebiyat ve felsefe dergisi. Yazılar, sayılar, yazar
+                profilleri ve editör paneliyle uçtan uca çalışan, monokrom bir yayın estetiğine
+                sahip yayın platformu.
+              </p>
+              <ul class="chips chips-sm">
+                <li>Next.js</li><li>React</li><li>Vercel</li>
+              </ul>
             </div>
-            <h3>Sehven</h3>
-            <p data-i18n="projects.p1.desc">
-              Bağımsız bir dijital edebiyat ve felsefe dergisi. Yazılar, sayılar, yazar
-              profilleri ve editör paneliyle uçtan uca çalışan, monokrom bir yayın estetiğine
-              sahip yayın platformu.
-            </p>
-            <ul class="chips chips-sm">
-              <li>Next.js</li><li>React</li><li>Vercel</li>
-            </ul>
-            <a class="project-link" href="https://sehvendergisi.com.tr" target="_blank" rel="noopener">
-              <span data-i18n="projects.visit">Siteyi Aç</span> <span aria-hidden="true">↗</span>
-            </a>
+            <div class="pr-side">
+              <span class="pr-year">2026</span>
+              <a class="pr-link" href="https://sehvendergisi.com.tr" target="_blank" rel="noopener">
+                <span data-i18n="projects.visit">Siteyi Aç</span> <span class="pr-arrow">↗</span>
+              </a>
+            </div>
           </article>
 
-          <article class="project-card reveal">
-            <div class="project-top">
-              <span class="project-domain">hesaplariz.org</span>
-              <span class="project-year">2026</span>
+          <article class="project-row reveal">
+            <span class="pr-index">02</span>
+            <div class="pr-main">
+              <div class="pr-top">
+                <a class="pr-domain" href="https://hesaplariz.org" target="_blank" rel="noopener">
+                  hesaplariz.org
+                </a>
+                <span class="pr-status"><i></i><span data-i18n="projects.live">Canlı</span></span>
+              </div>
+              <h3>Hesaplarız</h3>
+              <p data-i18n="projects.p2.desc">
+                30'dan fazla aracı tek sitede toplayan ücretsiz hesaplama koleksiyonu: finans,
+                sağlık, tarih, ölçü ve daha fazlası. Tüm hesaplamalar tamamen tarayıcıda,
+                kayıt gerekmeden çalışır.
+              </p>
+              <ul class="chips chips-sm">
+                <li>Next.js</li><li>JavaScript</li><li>Vercel</li>
+              </ul>
             </div>
-            <h3>Hesaplarız</h3>
-            <p data-i18n="projects.p2.desc">
-              30'dan fazla aracı tek sitede toplayan ücretsiz hesaplama koleksiyonu: finans,
-              sağlık, tarih, ölçü ve daha fazlası. Tüm hesaplamalar tamamen tarayıcıda,
-              kayıt gerekmeden çalışır.
-            </p>
-            <ul class="chips chips-sm">
-              <li>Next.js</li><li>JavaScript</li><li>Vercel</li>
-            </ul>
-            <a class="project-link" href="https://hesaplariz.org" target="_blank" rel="noopener">
-              <span data-i18n="projects.visit">Siteyi Aç</span> <span aria-hidden="true">↗</span>
-            </a>
+            <div class="pr-side">
+              <span class="pr-year">2026</span>
+              <a class="pr-link" href="https://hesaplariz.org" target="_blank" rel="noopener">
+                <span data-i18n="projects.visit">Siteyi Aç</span> <span class="pr-arrow">↗</span>
+              </a>
+            </div>
           </article>
 
         </div>
@@ -204,24 +277,32 @@
     <!-- İLETİŞİM -->
     <section id="iletisim" class="section section-alt">
       <div class="container">
-        <p class="section-label reveal"><span>04</span> <span data-i18n="contact.label">İletişim</span></p>
+        <div class="section-label reveal">
+          <span class="sec-num">04</span>
+          <span data-i18n="contact.label">İletişim</span>
+          <span class="sec-rule"></span>
+        </div>
+
         <h2 class="reveal" data-i18n="contact.title">Birlikte çalışalım</h2>
         <p class="section-intro reveal" data-i18n="contact.desc">
           Proje fikriniz, iş birliği ya da sadece merhaba demek için — her zaman açığım.
         </p>
 
-        <div class="contact-list reveal">
-          <a class="contact-item" href="mailto:burhankaratas771@gmail.com">
-            <span class="contact-kind">E-posta</span>
-            <span class="contact-value">burhankaratas771@gmail.com</span>
+        <div class="env-list reveal">
+          <a class="env-row" href="mailto:burhankaratas771@gmail.com">
+            <span class="env-key">EMAIL</span>
+            <span class="env-lead" aria-hidden="true"></span>
+            <span class="env-val">burhankaratas771@gmail.com</span>
           </a>
-          <a class="contact-item" href="https://github.com/burhankaratas" target="_blank" rel="noopener">
-            <span class="contact-kind">GitHub</span>
-            <span class="contact-value">github.com/burhankaratas</span>
+          <a class="env-row" href="https://github.com/burhankaratas" target="_blank" rel="noopener">
+            <span class="env-key">GITHUB</span>
+            <span class="env-lead" aria-hidden="true"></span>
+            <span class="env-val">github.com/burhankaratas</span>
           </a>
-          <a class="contact-item" href="https://www.linkedin.com/in/burhankaratas/" target="_blank" rel="noopener">
-            <span class="contact-kind">LinkedIn</span>
-            <span class="contact-value">in/burhankaratas</span>
+          <a class="env-row" href="https://www.linkedin.com/in/karatasburhan/" target="_blank" rel="noopener">
+            <span class="env-key">LINKEDIN</span>
+            <span class="env-lead" aria-hidden="true"></span>
+            <span class="env-val">in/karatasburhan</span>
           </a>
         </div>
       </div>
@@ -231,8 +312,9 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© <span id="year">2026</span> Mahmut Burhan Karataş · bkaratas.dev</p>
+      <p>© <span id="year">2026</span> Mahmut Burhan Karataş</p>
       <p class="footer-note" data-i18n="footer.note">Vanilla HTML · CSS · JavaScript ile yapıldı.</p>
+      <p class="footer-path">~/bkaratas.dev</p>
     </div>
   </footer>
 

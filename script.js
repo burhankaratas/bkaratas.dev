@@ -1,4 +1,4 @@
-/* bkaratas.dev — i18n (TR/EN), mobile nav, reveal on scroll */
+/* bkaratas.dev — i18n (TR/EN), mobile nav, reveal, scroll progress */
 
 const I18N = {
   tr: {
@@ -17,6 +17,7 @@ const I18N = {
     "hero.role": "Yazılım Geliştirici",
     "hero.tagline":
       "Temiz kod, otomasyon ve gerçekten işe yarayan ürünler kuran bir geliştirici. Fikri alıp çalışan web sitelerine ve araçlara dönüştürüyorum.",
+    "hero.available": "Yeni fırsatlara açık",
     "hero.ctaProjects": "Projeleri Gör",
     "hero.ctaContact": "İletişime Geç",
 
@@ -43,6 +44,7 @@ const I18N = {
     "projects.label": "Projeler",
     "projects.title": "Yaptığım işler",
     "projects.intro": "Tasarlayıp yayına aldığım kendi projelerim.",
+    "projects.live": "Canlı",
     "projects.visit": "Siteyi Aç",
     "projects.p1.desc":
       "Bağımsız bir dijital edebiyat ve felsefe dergisi. Yazılar, sayılar, yazar profilleri ve editör paneliyle uçtan uca çalışan, monokrom bir yayın estetiğine sahip yayın platformu.",
@@ -72,6 +74,7 @@ const I18N = {
     "hero.role": "Software Developer",
     "hero.tagline":
       "A developer who builds clean code, automation and products that actually work. I take an idea and turn it into live websites and tools.",
+    "hero.available": "Open to opportunities",
     "hero.ctaProjects": "View Projects",
     "hero.ctaContact": "Get in Touch",
 
@@ -98,6 +101,7 @@ const I18N = {
     "projects.label": "Projects",
     "projects.title": "Selected work",
     "projects.intro": "My own products, designed and shipped by me.",
+    "projects.live": "Live",
     "projects.visit": "Visit Site",
     "projects.p1.desc":
       "An independent digital literature and philosophy magazine. An end-to-end publishing platform with articles, issues, author profiles and an editor panel, with a monochrome publication aesthetic.",
@@ -216,16 +220,46 @@ function initReveal() {
         }
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
   );
 
   items.forEach((el) => observer.observe(el));
+}
+
+function initScrollProgress() {
+  const bar = document.getElementById("progress-bar");
+  if (!bar) return;
+
+  let ticking = false;
+
+  const update = () => {
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - doc.clientHeight;
+    const ratio = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+    bar.style.transform = `scaleX(${ratio})`;
+    ticking = false;
+  };
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true }
+  );
+
+  window.addEventListener("resize", update, { passive: true });
+  update();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   initLanguage();
   initMobileNav();
   initReveal();
+  initScrollProgress();
 
   const year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
