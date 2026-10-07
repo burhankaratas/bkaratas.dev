@@ -4,7 +4,7 @@ const I18N = {
   tr: {
     "meta.title": "Mahmut Burhan Karataş — Yazılım Geliştirici",
     "meta.description":
-      "Mahmut Burhan Karataş — temiz kod, otomasyon ve faydalı ürünler kuran yazılım geliştirici. Sehven Dergi ve Hesaplarız.org projeleri.",
+      "Mahmut Burhan Karataş — temiz kod, otomasyon ve faydalı ürünler kuran yazılım geliştirici. Sehven Dergi, Hesaplarız.org ve açık kaynak projelerin arkasındaki isim.",
 
     "a11y.skip": "İçeriğe geç",
 
@@ -43,13 +43,23 @@ const I18N = {
 
     "projects.label": "Projeler",
     "projects.title": "Yaptığım işler",
-    "projects.intro": "Tasarlayıp yayına aldığım kendi projelerim.",
+    "projects.intro": "Tasarlayıp geliştirdiğim projeler — bir kısmı canlı, bir kısmı açık kaynak.",
     "projects.live": "Canlı",
     "projects.visit": "Siteyi Aç",
+    "projects.opensource": "Açık Kaynak",
+    "projects.github": "Kodu Gör",
     "projects.p1.desc":
       "Bağımsız bir dijital edebiyat ve felsefe dergisi. Yazılar, sayılar, yazar profilleri ve editör paneliyle uçtan uca çalışan, monokrom bir yayın estetiğine sahip yayın platformu.",
     "projects.p2.desc":
       "30'dan fazla aracı tek sitede toplayan ücretsiz hesaplama koleksiyonu: finans, sağlık, tarih, ölçü ve daha fazlası. Tüm hesaplamalar tamamen tarayıcıda, kayıt gerekmeden çalışır.",
+    "projects.p3.desc":
+      "Flask tabanlı web uygulamasını Electron ile masaüstüne taşıyan modüler bir hızlı okuma programı. Takistoskop, anlam ve dikkat refleksi, dikkat analizi ve matematik modülleri içeriyor; yeni bir egzersiz eklemek için tek bir HTML dosyası yeterli.",
+    "projects.p4.desc":
+      "Çok yazarlı bir dijital yayın platformu. Yazarlar taslak yazıp yayına gönderiyor, editör onaylıyor; yazar profilleri, mesajlaşma ve hesap ayarlarıyla uçtan uca bir içerik üretim akışı sunuyor.",
+    "projects.p5.desc":
+      "Ovasan Mühendislik için geliştirdiğim kurumsal web sitesi ve içerik yönetim paneli. Flask Blueprint mimarisi, MySQL veritabanı, iletişim formu, SMTP ile e-posta gönderimi ve reCAPTCHA doğrulaması içeriyor.",
+    "projects.p6.desc":
+      "Python ile yazdığım çok amaçlı siber güvenlik aracı. TCP port taraması, URL'den IP çözümleme ve sözlük tabanlı brute force modülleriyle temel ağ güvenliği testleri için konsol arayüzü.",
 
     "contact.label": "İletişim",
     "contact.title": "Birlikte çalışalım",
@@ -100,13 +110,23 @@ const I18N = {
 
     "projects.label": "Projects",
     "projects.title": "Selected work",
-    "projects.intro": "My own products, designed and shipped by me.",
+    "projects.intro": "Projects I designed and built — some live, some open source.",
     "projects.live": "Live",
     "projects.visit": "Visit Site",
+    "projects.opensource": "Open Source",
+    "projects.github": "View Code",
     "projects.p1.desc":
       "An independent digital literature and philosophy magazine. An end-to-end publishing platform with articles, issues, author profiles and an editor panel, with a monochrome publication aesthetic.",
     "projects.p2.desc":
       "A free collection of 30+ calculators in one place: finance, health, dates, measurements and more. Every calculation runs entirely in your browser — no sign-up required.",
+    "projects.p3.desc":
+      "A modular speed-reading app that wraps a Flask web server in an Electron desktop shell. Includes tachistoscope, comprehension and attention reflex, attention analysis and math modules — adding a new exercise takes a single HTML file.",
+    "projects.p4.desc":
+      "A multi-author digital publishing platform. Writers draft and submit posts for editorial approval, with author profiles, messaging and account settings — an end-to-end content workflow.",
+    "projects.p5.desc":
+      "A corporate website and content management panel I built for Ovasan Engineering. Flask Blueprint architecture with MySQL, a contact form, SMTP email delivery and reCAPTCHA validation.",
+    "projects.p6.desc":
+      "A multi-purpose cybersecurity tool written in Python. TCP port scanning, URL-to-IP resolution and wordlist-based brute force — a console interface for basic network security testing.",
 
     "contact.label": "Contact",
     "contact.title": "Let's work together",
@@ -120,7 +140,7 @@ const HTML_META = {
   tr: {
     title: "Mahmut Burhan Karataş — Yazılım Geliştirici",
     description:
-      "Mahmut Burhan Karataş — temiz kod, otomasyon ve faydalı ürünler kuran yazılım geliştirici. Sehven Dergi ve Hesaplarız.org projeleri.",
+      "Mahmut Burhan Karataş — temiz kod, otomasyon ve faydalı ürünler kuran yazılım geliştirici. Sehven Dergi, Hesaplarız.org ve açık kaynak projelerin arkasındaki isim.",
     ogLocale: "tr_TR",
   },
   en: {

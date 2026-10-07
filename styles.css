@@ -666,6 +666,8 @@ p { margin: 0 0 1em; }
   letter-spacing: 0.02em;
   color: var(--accent);
   border-bottom: 1px solid transparent;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .pr-domain:hover { border-bottom-color: var(--accent); }
 
@@ -687,6 +689,12 @@ p { margin: 0 0 1em; }
   background: var(--accent);
   display: block;
   animation: pulse 2.2s ease-in-out infinite;
+}
+
+/* Açık kaynak durumu: canlı nokta yerine sabit, soluk işaret */
+.pr-status--os i {
+  background: var(--muted);
+  animation: none;
 }
 
 .project-row h3 { font-size: clamp(1.4rem, 3vw, 1.85rem); margin-bottom: 0.35em; }
