@@ -64,6 +64,7 @@ const I18N = {
     "contact.label": "İletişim",
     "contact.title": "Birlikte çalışalım",
     "contact.desc": "Proje fikriniz, iş birliği ya da sadece merhaba demek için — her zaman açığım.",
+    "contact.elsewhere": "Diğer profiller",
 
     "footer.note": "Vanilla HTML · CSS · JavaScript ile yapıldı.",
   },
@@ -131,6 +132,7 @@ const I18N = {
     "contact.label": "Contact",
     "contact.title": "Let's work together",
     "contact.desc": "Whether it's a project idea, a collaboration or just saying hello — I'm all ears.",
+    "contact.elsewhere": "Other profiles",
 
     "footer.note": "Built with vanilla HTML · CSS · JavaScript.",
   },
