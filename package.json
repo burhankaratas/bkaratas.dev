@@ -1,0 +1,13 @@
+{
+  "name": "bkaratas-dev",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "bkaratas.dev — kişisel portföy sitesi + yönetim paneli (Vercel Functions)",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@vercel/functions": "^3.10.1"
+  }
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel Girişi — bkaratas.dev</title>
+  <meta name="description" content="bkaratas.dev yönetim paneli girişi.">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0a0b">
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/panel/panel.css">
+</head>
+<body>
+
+  <main class="auth-wrap">
+    <section class="auth-card" aria-labelledby="login-title">
+      <div class="auth-bar">
+        <span class="auth-path">bkaratas.dev — panel</span>
+        <span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      </div>
+
+      <div class="auth-body">
+        <p class="auth-cmd"><span class="prompt">$</span> sudo login --panel</p>
+
+        <h1 id="login-title">Yönetim Paneli</h1>
+        <p class="auth-lede">
+          Devam etmek için parolanızı girin. Bu alan botlara karşı Turnstile ile korunur.
+        </p>
+
+        <form id="login-form" novalidate>
+          <label class="field">
+            <span class="field-key">Parola</span>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="••••••••"
+              required
+              autofocus>
+          </label>
+
+          <div id="turnstile" class="turnstile-slot" aria-live="polite"></div>
+
+          <button id="login-submit" class="auth-submit" type="submit">Giriş Yap</button>
+
+          <p id="login-error" class="auth-error" role="alert" hidden></p>
+        </form>
+      </div>
+
+      <div class="auth-foot">
+        <a href="/">← Siteye dön</a>
+        <span id="login-status">bekleniyor…</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="/panel/panel.js"></script>
+</body>
+</html>

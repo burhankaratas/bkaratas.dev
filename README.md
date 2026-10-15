@@ -1,7 +1,8 @@
 # bkaratas.dev
 
 Mahmut Burhan Karataş için tek sayfalık, çift dilli (TR/EN) kişisel portföy sitesi.
-Vanilla HTML / CSS / JavaScript — build adımı yok, statik dosyalar.
+Vanilla HTML / CSS / JavaScript — statik site. Yönetim paneli ise Vercel Functions
+(`/api`) üzerinde çalışır; build adımı gerekmez.
 
 ## Dosyalar
 
@@ -17,12 +18,28 @@ Vanilla HTML / CSS / JavaScript — build adımı yok, statik dosyalar.
 | `robots.txt` / `sitemap.xml` | Arama motoru yönergeleri ve site haritası |
 | `site.webmanifest` | PWA/uygulama meta verisi |
 | `<indexnow-key>.txt` | IndexNow doğrulama anahtarı (Bing/Yandex) |
+| `panel/` | Yönetim paneli: giriş sayfası (`/panel`) + göstermelik kontrol ekranı (`/panel/dashboard`) |
+| `api/` | Vercel Functions: `auth/login`, `auth/logout`, `auth/session`, `auth/config` (ortak kod `api/_lib/`) |
+| `middleware.js` | `/panel/dashboard` için sunucu tarafı oturum kapısı |
+| `scripts/hash-password.mjs` | Panel parolası için `PANEL_PASSWORD_HASH` üretici |
+| `vercel.json` | Panel/API yanıtlarına `noindex` başlıkları |
+| `.env.example` | Gerekli ortam değişkenlerinin örneği |
 
 ## Yerelde görme
+
+Yalnızca ana siteyi (statik) görmek için:
 
 ```bash
 python3 -m http.server 8000
 # → http://localhost:8000
+```
+
+Paneli ve API'yi (Turnstile girişi, oturum) görmek için Vercel geliştirme ortamı gerekir:
+
+```bash
+npm install
+npx vercel dev
+# → http://localhost:3000/panel
 ```
 
 ## Vercel'e deploy
@@ -79,3 +96,56 @@ Alan adı **name.com** üzerinden alındı ve Vercel'in nameserver'larına yönl
 - **Yeni proje eklemek:** `index.html` → `#projeler` içindeki `.project-card` bloğunu kopyalayın,
   çeviriler için `script.js` → `projects.p3.desc` gibi yeni bir key ekleyin.
 - **Renk / vurgu:** `styles.css` → `:root` değişkenleri (`--accent` vurgu rengidir).
+
+## Yönetim paneli
+
+Panel temeli Vercel Functions üzerinde çalışır. Site statik kalmaya devam eder;
+yalnızca `/panel` ve `/api` yolları dinamiktir.
+
+### Nasıl çalışır?
+
+1. **Giriş sayfası** `/panel` — parola alanı + Cloudflare Turnstile widget'ı.
+2. **`POST /api/auth/login`** — önce Turnstile token'ı Cloudflare'e sunucu tarafında doğrulatılır,
+   sonra parola kontrol edilir; başarılıysa imzalı (HMAC) bir `HttpOnly` çerez verilir.
+3. **`middleware.js`** — `/panel/dashboard` isteklerini çerez geçerli değilse `/panel`'e yönlendirir.
+4. **`POST /api/auth/logout`** — çerezi siler. **`GET /api/auth/session`** — oturum durumu.
+
+Güvenlik: oturum çerezi `HttpOnly` + `Secure` + `SameSite=Lax`, 12 saat geçerlidir ve
+sunucu tarafında durum tutulmaz (stateless). Parola `scrypt` ile özetlenir. Giriş denemeleri
+IP başına sınırlandırılır (bellek-içi, best-effort). Panel ve API, `robots.txt` + `X-Robots-Tag`
++ `<meta name="robots">` ile botlara/arama motorlarına kapalıdır (ayrıca `sitemap.xml`'e eklenmez).
+
+### 1. Ortam değişkenleri
+
+Yerelde `.env.example` dosyasını `.env.local` olarak kopyalayın; Vercel'de
+**Project → Settings → Environment Variables** altına ekleyin:
+
+| Değişken | Zorunlu | Açıklama |
+| --- | --- | --- |
+| `PANEL_SESSION_SECRET` | ✅ | Oturum imzalama anahtarı. `openssl rand -hex 32` |
+| `TURNSTILE_SITE_KEY` | ✅ | Cloudflare Turnstile site key (herkese açık) |
+| `TURNSTILE_SECRET_KEY` | ✅ | Cloudflare Turnstile secret key (gizli) |
+| `PANEL_PASSWORD_HASH` | ✅* | `node scripts/hash-password.mjs "parolanız"` çıktısı |
+| `PANEL_PASSWORD` | — | *Hash yerine basit düz parola (önerilmez).* |
+
+### 2. Cloudflare Turnstile
+
+[dash.cloudflare.com](https://dash.cloudflare.com) → **Turnstile** → **Add site**.
+Widget modu: **Managed**. Aldığınız **Site Key** ve **Secret Key**'i ortam değişkenlerine ekleyin.
+
+### 3. Yerelde çalıştırma
+
+```bash
+npm install
+npx vercel dev        # http://localhost:3000/panel
+```
+
+> Turnstile anahtarları tanımlı değilse, **geliştirme** ortamında bot doğrulaması atlanır
+> (başlıyor olsun diye). Üretimde (`VERCEL_ENV=production`) anahtar zorunludur.
+
+### Sıradaki adımlar
+
+- Veritabanı bağlantısı (içerik deposu)
+- Blog yazısı oluşturma / düzenleme
+- Site içeriklerini panelden yönetme
+- Medya yükleme
