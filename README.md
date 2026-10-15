@@ -112,6 +112,10 @@ Blog, veritabanı olmadan çalışır: **depo = içerik deposu**.
   `/content/uploads/...` olarak referanslanır.
 - **Site haritası:** `/sitemap.xml` dinamiktir ve yayımlanmış yazıları içerir. Kök dizinde
   statik `sitemap.xml` **bulunmamalıdır**; aksi hâlde statik dosya rewrite'ı gölgeler.
+- **Kaynak gizliliği:** `/content/*.md` adresleri `307` ile `/blog`'a yönlendirilir
+  (`vercel.json` → `redirects`); statik `.md` sunulmaz. **Uyarı:** Depo *public* iken
+  taslaklar GitHub arayüzü/raw üzerinden okunabilir — gerçek gizlilik için depo private
+  olmalı ve okuma yolunun GitHub API'sine taşınması gerekir.
 
 ## İçerik güncelleme
 
