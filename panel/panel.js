@@ -1,5 +1,5 @@
 /* bkaratas.dev — panel giriş mantığı
-   Turnstile token'ı + parola → /api/auth/login → imzalı oturum çerezi */
+   Turnstile token'ı + kullanıcı adı/parola → /api/auth/login → imzalı oturum çerezi */
 
 const els = {
   form: document.getElementById("login-form"),
@@ -13,6 +13,8 @@ const els = {
 
 let turnstileToken = "";
 let turnstileWidgetId = null;
+let turnstileSiteKey = "";
+let turnstileRendered = false;
 
 const MESSAGES = {
   invalid_credentials: "Kullanıcı adı veya parola hatalı. Lütfen tekrar deneyin.",
@@ -42,6 +44,10 @@ function setBusy(busy) {
   if (!els.submit) return;
   els.submit.disabled = busy;
   els.submit.textContent = busy ? "Doğrulanıyor…" : "Giriş Yap";
+}
+
+function setStatus(text) {
+  if (els.status) els.status.textContent = text;
 }
 
 /** Sunucudan gelen Turnstile teşhis bilgisini mesaja ekler. */
@@ -86,75 +92,106 @@ function loadScript(src) {
   });
 }
 
+/**
+ * Widget'ı çizer. Yalnızca Turnstile API'si HAZIR olduğunda
+ * (window.turnstile.render bir fonksiyon olduğunda) çağrılır.
+ */
+function renderTurnstile() {
+  if (turnstileRendered) return;
+  if (!window.turnstile || typeof window.turnstile.render !== "function") return;
+
+  turnstileRendered = true;
+  try {
+    turnstileWidgetId = window.turnstile.render(els.turnstile, {
+      sitekey: turnstileSiteKey,
+      theme: "dark",
+      callback: (token) => {
+        turnstileToken = token;
+        setStatus("koruma: açık");
+        clearError();
+      },
+      "expired-callback": () => {
+        turnstileToken = "";
+        setStatus("koruma: süresi doldu");
+      },
+      "error-callback": (code) => {
+        turnstileToken = "";
+        turnstileRendered = false;
+        setStatus("koruma: hata");
+        showError(
+          `Turnstile hatası (kod: ${code}). Alan adı (hostname) ve anahtar ayarlarını kontrol edin.`
+        );
+      },
+    });
+    setStatus("koruma: yükleniyor…");
+  } catch (error) {
+    turnstileRendered = false;
+    showError(
+      "Bot koruması başlatılamadı" +
+        (error && error.message ? `: ${error.message}` : ".")
+    );
+  }
+}
+
+// Cloudflare api.js hazır olduğunda bu global fonksiyonu çağırır
+// (script …?onload=onTurnstileLoad ile yüklenir).
+window.onTurnstileLoad = renderTurnstile;
+
+/** API hazır olana kadar kısa aralıklarla bekler (onload gelmezse güvenlik ağı). */
+function pollForTurnstile(tries) {
+  if (turnstileRendered) return;
+  if (window.turnstile && typeof window.turnstile.render === "function") {
+    renderTurnstile();
+    return;
+  }
+  if (tries <= 0) {
+    setStatus("koruma: yüklenemedi");
+    if (!els.error || els.error.hidden) {
+      showError(
+        "Bot koruması yüklenemedi. Reklam engelleyici veya tarayıcı kalkanı (uBlock, Brave Shields vb.) engelliyor olabilir."
+      );
+    }
+    return;
+  }
+  setTimeout(() => pollForTurnstile(tries - 1), 250);
+}
+
 async function setupTurnstile() {
-  let siteKey = "";
   try {
     const response = await fetch("/api/auth/config", {
       headers: { Accept: "application/json" },
     });
     const data = await response.json();
-    siteKey = (data && data.turnstileSiteKey) || "";
+    turnstileSiteKey = (data && data.turnstileSiteKey) || "";
   } catch {
     /* aşağıda ele alınıyor */
   }
 
-  if (!siteKey) {
+  if (!turnstileSiteKey) {
     els.turnstile.innerHTML =
       '<p class="panel-note">Turnstile Site Key tanımlı değil — Vercel ortam değişkenlerini kontrol edin.</p>';
-    if (els.status) els.status.textContent = "koruma: kurulmamış";
+    setStatus("koruma: kurulmamış");
     return;
   }
 
-  if (!window.turnstile) {
-    try {
-      await loadScript("https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit");
-    } catch {
-      showError("Bot koruması yüklenemedi. Sayfayı yenileyin.");
-      return;
-    }
-  }
+  const SRC =
+    "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad";
 
-  if (!window.turnstile) {
-    showError("Bot koruması yüklenemedi. Sayfayı yenileyin.");
+  // Script zaten yüklüyse doğrudan çiz.
+  if (window.turnstile && typeof window.turnstile.render === "function") {
+    renderTurnstile();
     return;
   }
 
-  const renderWidget = () => {
-    try {
-      turnstileWidgetId = window.turnstile.render(els.turnstile, {
-        sitekey: siteKey,
-        theme: "dark",
-        callback: (token) => {
-          turnstileToken = token;
-          if (els.status) els.status.textContent = "koruma: açık";
-          clearError();
-        },
-        "expired-callback": () => {
-          turnstileToken = "";
-          if (els.status) els.status.textContent = "koruma: süresi doldu";
-        },
-        "error-callback": (code) => {
-          turnstileToken = "";
-          if (els.status) els.status.textContent = "koruma: hata";
-          showError(
-            `Turnstile hatası (kod: ${code}). Alan adı (hostname) ve anahtar ayarlarını kontrol edin.`
-          );
-        },
-      });
-      if (els.status) els.status.textContent = "koruma: yükleniyor…";
-    } catch (error) {
-      showError(
-        "Bot koruması başlatılamadı" +
-          (error && error.message ? `: ${error.message}` : ".")
-      );
-    }
-  };
-
-  if (typeof window.turnstile.ready === "function") {
-    window.turnstile.ready(renderWidget);
-  } else {
-    renderWidget();
+  try {
+    await loadScript(SRC);
+  } catch {
+    setStatus("koruma: yüklenemedi");
+    showError("Bot koruması yüklenemedi. Reklam engelleyici veya ağ engelliyor olabilir.");
+    return;
   }
+
+  pollForTurnstile(40);
 }
 
 function resetTurnstile() {
@@ -187,7 +224,7 @@ async function onSubmit(event) {
   }
 
   setBusy(true);
-  if (els.status) els.status.textContent = "doğrulanıyor…";
+  setStatus("doğrulanıyor…");
 
   try {
     const response = await fetch("/api/auth/login", {
@@ -199,7 +236,7 @@ async function onSubmit(event) {
     const data = await response.json().catch(() => ({}));
 
     if (response.ok && data.ok) {
-      if (els.status) els.status.textContent = "giriş başarılı";
+      setStatus("giriş başarılı");
       const target = data.redirect && data.redirect.startsWith("/panel")
         ? data.redirect
         : nextUrl();
@@ -211,11 +248,11 @@ async function onSubmit(event) {
       (MESSAGES[data.error] || "Giriş yapılamadı. Bilgileri kontrol edin.") +
         detailSuffix(data)
     );
-    if (els.status) els.status.textContent = "hatalı deneme";
+    setStatus("hatalı deneme");
     resetTurnstile();
   } catch {
     showError(MESSAGES.network);
-    if (els.status) els.status.textContent = "bağlantı hatası";
+    setStatus("bağlantı hatası");
   } finally {
     setBusy(false);
   }
