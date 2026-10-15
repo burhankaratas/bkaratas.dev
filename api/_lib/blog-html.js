@@ -1,6 +1,19 @@
 // Blog sayfalarının sunucu tarafında üretilen HTML'i.
 // Görsel dil ana siteyle uyumludur: koyu zemin, amber vurgu, mono etiketler.
-import { escapeHtml } from "./sanitize.js";
+//
+// Not: Bu modül bilinçli olarak hafif tutulur. `escapeHtml` burada yerel olarak
+// tanımlanır; `sanitize-html` (ağır CJS bağımlılık) yalnızca panel yazma yolunda
+// kullanılır ve public blog render zincirine dahil edilmez.
+
+/** HTML kaçışı (metin alanları şablona gömülmeden önce). */
+function escapeHtml(value) {
+  return String(value == null ? "" : value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
 const SITE = "https://bkaratas.dev";
 const YEAR = new Date().getFullYear();
