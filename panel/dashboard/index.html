@@ -28,7 +28,7 @@
 
       <nav class="side-nav" aria-label="Panel">
         <a class="is-active" href="/panel/dashboard"><i>01</i><span>Genel Bakış</span></a>
-        <a href="#"><i>02</i><span>Yazılar</span><span class="soon">yakında</span></a>
+        <a href="/panel/dashboard/yazilar/"><i>02</i><span>Yazılar</span></a>
         <a href="#"><i>03</i><span>İçerikler</span><span class="soon">yakında</span></a>
         <a href="#"><i>04</i><span>Medya</span><span class="soon">yakında</span></a>
         <a href="#"><i>05</i><span>Mesajlar</span><span class="soon">yakında</span></a>
@@ -53,28 +53,28 @@
 
         <div class="panel-head">
           <h1>Hoş geldin, <span id="panel-user-name">Burhan</span> 👋</h1>
-          <p>Panel temeli hazır. Sıradaki adımlarda blog sistemi ve site içeriklerini buradan yöneteceğiz.</p>
+          <p>Panelin temeli ve blog sistemi hazır. Yazılarını buradan yazıp yönetebilirsin.</p>
         </div>
 
         <div class="notice">
           <span class="notice-key">durum</span>
           <p>
-            <strong>Giriş katmanı aktif.</strong>
-            Bu arayüz şimdilik göstermeliktir — veriler örnek niteliğindedir.
-            Gerçek içerik yönetimi sonraki adımlarda eklenecek.
+            <strong>Blog yayında.</strong>
+            Yazılar <code>content/yazilar/*.md</code> dosyalarında saklanır; panelde kaydettiğinde
+            GitHub'a işlenir ve site otomatik yeniden yayınlanır (~1 dk). Veritabanı yoktur.
           </p>
         </div>
 
         <section class="stat-grid" aria-label="Özet">
           <div class="stat">
             <span class="stat-key">Yazılar</span>
-            <span class="stat-val is-muted">—</span>
-            <span class="stat-sub">henüz veri yok</span>
+            <span class="stat-val" id="stat-published">—</span>
+            <span class="stat-sub">yayında</span>
           </div>
           <div class="stat">
             <span class="stat-key">Taslaklar</span>
-            <span class="stat-val is-muted">—</span>
-            <span class="stat-sub">henüz veri yok</span>
+            <span class="stat-val" id="stat-drafts">—</span>
+            <span class="stat-sub">yayında değil</span>
           </div>
           <div class="stat">
             <span class="stat-key">Mesajlar</span>
@@ -102,20 +102,20 @@
                   <span>Panel giriş katmanı (Turnstile + parola + oturum)</span>
                 </li>
                 <li>
+                  <span class="rm-mark is-done">[x]</span>
+                  <span>İçerik katmanı (content/ · md dosyaları · git)</span>
+                </li>
+                <li>
+                  <span class="rm-mark is-done">[x]</span>
+                  <span>Blog yazısı oluşturma, düzenleme, taslak &amp; silme</span>
+                </li>
+                <li>
+                  <span class="rm-mark is-done">[x]</span>
+                  <span>Görsel yükleme ve yayımlama</span>
+                </li>
+                <li>
                   <span class="rm-mark is-next">[ ]</span>
-                  <span>Veritabanı bağlantısı (içerik deposu)</span>
-                </li>
-                <li>
-                  <span class="rm-mark">[ ]</span>
-                  <span>Blog yazısı oluşturma &amp; düzenleme</span>
-                </li>
-                <li>
-                  <span class="rm-mark">[ ]</span>
                   <span>Site içeriklerini panelden güncelleme</span>
-                </li>
-                <li>
-                  <span class="rm-mark">[ ]</span>
-                  <span>Medya yükleme ve yönetimi</span>
                 </li>
               </ul>
             </div>
@@ -123,11 +123,14 @@
 
           <section class="card">
             <div class="card-bar">
-              <span class="card-name">son_islemler.log</span>
-              <span>activity</span>
+              <span class="card-name">hizli_islemler.sh</span>
+              <span>actions</span>
             </div>
             <div class="card-body">
-              <p class="empty">Henüz işlem kaydı yok.</p>
+              <p class="empty" style="text-align:left;padding:0 0 14px">
+                <a class="btn btn-primary btn-sm" href="/panel/dashboard/yazilar/duzenle/?new=1">+ Yeni yazı</a>
+              </p>
+              <p><a class="panel-note" href="/panel/dashboard/yazilar/">tüm yazıları gör →</a></p>
             </div>
           </section>
 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yazı Düzenle — Panel · bkaratas.dev</title>
+  <meta name="description" content="bkaratas.dev yönetim paneli — yazı editörü.">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0a0b">
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/panel/vendor/quill.snow.css">
+  <link rel="stylesheet" href="/panel/panel.css">
+</head>
+<body>
+
+  <div class="panel-shell">
+
+    <aside class="panel-sidebar">
+      <a class="side-brand" href="/panel/dashboard">
+        <span class="slash">//</span><span>bkaratas.dev</span>
+        <span class="tag">panel</span>
+      </a>
+
+      <nav class="side-nav" aria-label="Panel">
+        <a href="/panel/dashboard"><i>01</i><span>Genel Bakış</span></a>
+        <a class="is-active" href="/panel/dashboard/yazilar/"><i>02</i><span>Yazılar</span></a>
+        <a href="#"><i>03</i><span>İçerikler</span><span class="soon">yakında</span></a>
+        <a href="#"><i>04</i><span>Medya</span><span class="soon">yakında</span></a>
+        <a href="#"><i>05</i><span>Mesajlar</span><span class="soon">yakında</span></a>
+        <a href="#"><i>06</i><span>Ayarlar</span><span class="soon">yakında</span></a>
+      </nav>
+
+      <div class="side-foot">
+        <span>v0.2.0 · blog sistemi</span>
+      </div>
+    </aside>
+
+    <div class="panel-main-col">
+
+      <header class="panel-topbar">
+        <span class="topbar-title">düzenle</span>
+        <span class="topbar-spacer"></span>
+        <span class="user-chip"><span class="dot" aria-hidden="true"></span><span id="panel-user">admin</span></span>
+        <button id="logout" class="panel-btn" type="button">Çıkış</button>
+      </header>
+
+      <main class="panel-content is-wide">
+
+        <div class="editor-bar">
+          <div class="editor-bar-left">
+            <a class="btn btn-sm" href="/panel/dashboard/yazilar/">← Yazılar</a>
+            <span class="editor-bar-title" id="editor-title">yeni yazı</span>
+          </div>
+          <div class="editor-bar-actions">
+            <a class="btn btn-sm" id="view-link" href="#" target="_blank" rel="noopener" hidden>Görüntüle</a>
+            <button class="btn btn-sm btn-danger" id="delete-btn" type="button" hidden>Sil</button>
+            <button class="btn btn-primary" id="save-btn" type="button">Kaydet</button>
+          </div>
+        </div>
+
+        <div class="flash" id="flash" role="status" aria-live="polite"></div>
+
+        <div class="editor-grid">
+
+          <div class="editor-main">
+            <div class="editor-field">
+              <label class="editor-label" for="title">Başlık</label>
+              <input class="editor-input editor-input-lg" id="title" type="text" placeholder="Yazı başlığı" autocomplete="off" spellcheck="false">
+            </div>
+
+            <div class="editor-field">
+              <label class="editor-label">İçerik</label>
+              <div class="quill-wrap">
+                <div id="editor"></div>
+              </div>
+              <p class="editor-hint">Araç çubuğundan görsel ekleyebilir, başlık/liste/alıntı/kod ve bağlantı kullanabilirsin.</p>
+            </div>
+          </div>
+
+          <aside class="editor-side">
+
+            <section class="editor-side-card">
+              <h2 class="editor-side-title">durum</h2>
+              <div class="editor-field">
+                <label class="editor-label" for="status">Yayın durumu</label>
+                <select class="editor-select" id="status">
+                  <option value="draft">Taslak</option>
+                  <option value="published">Yayında</option>
+                </select>
+              </div>
+              <p class="editor-hint" id="slug-hint">Slug: yeni kayıtta başlıktan üretilir.</p>
+              <p class="editor-hint" id="time-hint"></p>
+            </section>
+
+            <section class="editor-side-card">
+              <h2 class="editor-side-title">meta</h2>
+              <div class="editor-field">
+                <label class="editor-label" for="category">Kategori</label>
+                <input class="editor-input" id="category" type="text" placeholder="ör. Yazılım" autocomplete="off">
+              </div>
+              <div class="editor-field">
+                <label class="editor-label" for="tags">Etiketler</label>
+                <input class="editor-input" id="tags" type="text" placeholder="virgülle ayır: yazilim, python" autocomplete="off">
+              </div>
+              <div class="editor-field" style="margin-bottom:0">
+                <label class="editor-label" for="excerpt">Özet</label>
+                <textarea class="editor-textarea" id="excerpt" placeholder="Kısa açıklama (boş bırakılırsa içerikten üretilir)"></textarea>
+              </div>
+            </section>
+
+            <section class="editor-side-card">
+              <h2 class="editor-side-title">kapak görseli</h2>
+              <div class="cover-box" id="cover-box">
+                <span class="cover-empty">Görsel seçilmedi</span>
+                <button class="cover-clear" id="cover-clear" type="button" hidden>kaldır</button>
+              </div>
+              <button class="btn btn-sm" id="cover-pick" type="button">Görsel Seç</button>
+              <p class="editor-hint">Kapak, liste ve yazı başında gösterilir. En fazla 3.5 MB.</p>
+            </section>
+
+          </aside>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <input id="cover-input" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif,image/svg+xml" class="sr-only">
+  <input id="image-input" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif,image/svg+xml" class="sr-only">
+
+  <script src="/panel/vendor/quill.js"></script>
+  <script type="module" src="/panel/dashboard/yazilar/duzenle/duzenle.js"></script>
+</body>
+</html>

@@ -5,7 +5,25 @@ const els = {
   user: document.getElementById("panel-user"),
   logout: document.getElementById("logout"),
   sessionSub: document.getElementById("panel-session-sub"),
+  statPublished: document.getElementById("stat-published"),
+  statDrafts: document.getElementById("stat-drafts"),
 };
+
+async function loadStats() {
+  try {
+    const response = await fetch("/api/panel/posts", { headers: { Accept: "application/json" } });
+    if (!response.ok) return;
+    const data = await response.json();
+    if (!data || !data.ok) return;
+    const posts = data.posts || [];
+    const published = posts.filter((p) => p.status === "published").length;
+    const drafts = posts.filter((p) => p.status !== "published").length;
+    if (els.statPublished) els.statPublished.textContent = String(published);
+    if (els.statDrafts) els.statDrafts.textContent = String(drafts);
+  } catch {
+    /* istatistikler opsiyonel */
+  }
+}
 
 async function init() {
   try {
@@ -22,6 +40,8 @@ async function init() {
     if (els.user && data.user && data.user.id) {
       els.user.textContent = data.user.id;
     }
+
+    loadStats();
   } catch {
     location.replace("/panel");
   }
