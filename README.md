@@ -15,11 +15,13 @@ Vanilla HTML / CSS / JavaScript — statik site. Yönetim paneli ise Vercel Func
 | `assets/og.png` | Sosyal paylaşım kartı (1200×630, WhatsApp/Instagram/X) |
 | `assets/apple-touch-icon.png` | iOS/masaüstü ikonu (180×180) |
 | `assets/og-source.html` | OG görselinin kaynağı (yeniden üretmek için) |
-| `robots.txt` / `sitemap.xml` | Arama motoru yönergeleri ve site haritası |
+| `robots.txt` | Arama motoru yönergeleri (site haritası `/sitemap.xml` dinamik üretilir) |
 | `site.webmanifest` | PWA/uygulama meta verisi |
 | `<indexnow-key>.txt` | IndexNow doğrulama anahtarı (Bing/Yandex) |
-| `panel/` | Yönetim paneli: giriş sayfası (`/panel`) + göstermelik kontrol ekranı (`/panel/dashboard`) |
-| `api/` | Vercel Functions: `auth/login`, `auth/logout`, `auth/session`, `auth/config` (ortak kod `api/_lib/`) |
+| `panel/` | Yönetim paneli: giriş (`/panel`) + kontrol ekranı (`/panel/dashboard`) + yazı yönetimi (`/panel/dashboard/yazilar`) |
+| `api/` | Vercel Functions: `auth/*`, `blog/*` (list · post · posts), `panel/*` (posts · uploads), `sitemap` (ortak kod `api/_lib/`) |
+| `content/yazilar/*.md` | Blog yazıları (frontmatter + HTML gövde). Depo = veritabanı; panel buraya commit'ler |
+| `content/uploads/` | Panelden yüklenen blog görselleri |
 | `middleware.js` | `/panel/dashboard` için sunucu tarafı oturum kapısı |
 | `scripts/hash-password.mjs` | Panel parolası için `PANEL_PASSWORD_HASH` üretici |
 | `vercel.json` | Panel/API yanıtlarına `noindex` başlıkları |
@@ -68,7 +70,7 @@ Alan adı **name.com** üzerinden alındı ve Vercel'in nameserver'larına yönl
 
 - **Open Graph / Twitter meta:** `index.html` `<head>` — WhatsApp, Instagram, Facebook, X, Telegram, Slack önizlemeleri için.
 - **JSON-LD (`@graph`):** `Person`, `WebSite`, `ProfilePage` ve projeler (`ItemList`) — arama motorlarına "kim" olduğunu ve projelerle ilişkisini bildirir.
-- **`robots.txt` + `sitemap.xml`:** tarama ve site haritası.
+- **`robots.txt` + `/sitemap.xml`:** tarama ve site haritası. Site haritası dinamik üretilir (`api/sitemap.js`) ve ana sayfa, `/blog` ile tüm yayımlanmış yazıları listeler.
 - **OG görselini yenileme** (tasarımı değiştirdiyseniz):
 
   ```bash
@@ -88,6 +90,28 @@ Alan adı **name.com** üzerinden alındı ve Vercel'in nameserver'larına yönl
    ```
 
 > Not: "Mahmut Burhan Karataş" aramasında üst sıralar için zaman, düzenli içerik ve diğer profillerden (GitHub, LinkedIn, Medium, Instagram) siteye bağlantı (backlink) gerekir. `sameAs` alanları bu kimlikleri birbirine bağlar.
+
+## Blog
+
+Blog, veritabanı olmadan çalışır: **depo = içerik deposu**.
+
+- **Yazılar:** `content/yazilar/<slug>.md` — frontmatter (başlık, slug, kategori, etiketler,
+  özet, kapak, `status: published|draft`, tarihler, okuma süresi) + HTML gövde.
+- **Okuma (`api/_lib/content.js`):** Önce deploy ile gelen yerel dosyalar, yoksa
+  `raw.githubusercontent.com`; sonuç 24 saat bellek-içi önbellekte tutulur. İstek anında
+  GitHub API'sine gidilmez.
+- **Yayımlama (panel):** yazı, GitHub Contents API ile `content/yazilar/`'a commit'lenir;
+  Vercel otomatik yeniden deploy eder (~1 dk) ve içerik tazelenir.
+- **Sayfalar:** `/blog` (liste) ve `/blog/<slug>` (yazı) sunucu tarafında üretilen HTML'dir
+  (`api/_lib/blog-html.js`) — SEO/Open Graph/JSON-LD içerir.
+- **Ana sayfa bölümü:** `#blog` bölümü `/api/blog/posts?limit=3` ile beslenir; yayımlanmış
+  yazı yoksa bölüm ve menü bağlantısı gizli kalır.
+- **Taslak önizleme:** `status: draft` yazılar dışarıya 404 döner; **panel oturumu açıkken**
+  `/blog/<slug>` adresinde "önizleme" rozetiyle gösterilir (`noindex`, `no-store`).
+- **Görseller:** panelden yüklenen görseller `content/uploads/` altına işlenir ve yazıda
+  `/content/uploads/...` olarak referanslanır.
+- **Site haritası:** `/sitemap.xml` dinamiktir ve yayımlanmış yazıları içerir. Kök dizinde
+  statik `sitemap.xml` **bulunmamalıdır**; aksi hâlde statik dosya rewrite'ı gölgeler.
 
 ## İçerik güncelleme
 
@@ -128,6 +152,12 @@ Yerelde `.env.example` dosyasını `.env.local` olarak kopyalayın; Vercel'de
 | `PANEL_USERNAME` | — | Panel kullanıcı adı. Tanımlanmazsa `mbkaratas` kullanılır. |
 | `PANEL_PASSWORD_HASH` | ✅* | `node scripts/hash-password.mjs "parolanız"` çıktısı |
 | `PANEL_PASSWORD` | — | *Hash yerine basit düz parola (önerilmez).* |
+| `GITHUB_TOKEN` | ✅ | Fine-grained PAT (Contents: **Read and write**). Panel yazı/görselleri bu token ile depoya işler. |
+| `GITHUB_REPO` | — | Depo. Varsayılan: `burhankaratas/bkaratas.dev` |
+| `GITHUB_BRANCH` | — | Dal. Varsayılan: `main` |
+
+Fine-grained token: GitHub → **Settings → Developer settings → Personal access tokens → Fine-grained tokens** →
+Repository access: yalnızca bu depo · Permissions: **Contents → Read and write**.
 
 ### 2. Cloudflare Turnstile
 
@@ -146,7 +176,10 @@ npx vercel dev        # http://localhost:3000/panel
 
 ### Sıradaki adımlar
 
-- Veritabanı bağlantısı (içerik deposu)
-- Blog yazısı oluşturma / düzenleme
-- Site içeriklerini panelden yönetme
-- Medya yükleme
+- Site içeriklerini (metin/çeviri) panelden yönetme
+- Medya yönetimi (yüklenen görselleri listeleme/silme)
+- Mesajlar (iletişim formu)
+- Ayarlar
+
+> Blog tarafı tamamlandı. Ayrı bir veritabanı yoktur; içerik `content/yazilar/`
+> altındaki markdown dosyalarında ve `content/uploads/` altındaki görsellerde tutulur.
