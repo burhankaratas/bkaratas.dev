@@ -47,7 +47,15 @@ export default {
           );
           return json({ ok: false, error: "turnstile_misconfigured" }, 500);
         }
-        return json({ ok: false, error: "turnstile_failed" }, 400);
+        return json(
+          {
+            ok: false,
+            error: "turnstile_failed",
+            reason: result.reason || "rejected",
+            codes: result.errorCodes || [],
+          },
+          400
+        );
       }
     } catch (error) {
       console.error("[login] turnstile", error);

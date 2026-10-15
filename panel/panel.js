@@ -44,6 +44,17 @@ function setBusy(busy) {
   els.submit.textContent = busy ? "Doğrulanıyor…" : "Giriş Yap";
 }
 
+/** Sunucudan gelen Turnstile teşhis bilgisini mesaja ekler. */
+function detailSuffix(data) {
+  if (!data || (data.error !== "turnstile_failed" && data.error !== "turnstile_misconfigured")) {
+    return "";
+  }
+  const parts = [];
+  if (data.reason) parts.push(data.reason);
+  if (Array.isArray(data.codes) && data.codes.length) parts.push(data.codes.join(", "));
+  return parts.length ? ` [${parts.join(" · ")}]` : "";
+}
+
 function nextUrl() {
   const params = new URLSearchParams(location.search);
   const next = params.get("next");
@@ -108,22 +119,42 @@ async function setupTurnstile() {
     return;
   }
 
-  turnstileWidgetId = window.turnstile.render(els.turnstile, {
-    sitekey: siteKey,
-    theme: "dark",
-    callback: (token) => {
-      turnstileToken = token;
-      clearError();
-    },
-    "expired-callback": () => {
-      turnstileToken = "";
-    },
-    "error-callback": () => {
-      turnstileToken = "";
-    },
-  });
+  const renderWidget = () => {
+    try {
+      turnstileWidgetId = window.turnstile.render(els.turnstile, {
+        sitekey: siteKey,
+        theme: "dark",
+        callback: (token) => {
+          turnstileToken = token;
+          if (els.status) els.status.textContent = "koruma: açık";
+          clearError();
+        },
+        "expired-callback": () => {
+          turnstileToken = "";
+          if (els.status) els.status.textContent = "koruma: süresi doldu";
+        },
+        "error-callback": (code) => {
+          turnstileToken = "";
+          if (els.status) els.status.textContent = "koruma: hata";
+          showError(
+            `Turnstile hatası (kod: ${code}). Alan adı (hostname) ve anahtar ayarlarını kontrol edin.`
+          );
+        },
+      });
+      if (els.status) els.status.textContent = "koruma: yükleniyor…";
+    } catch (error) {
+      showError(
+        "Bot koruması başlatılamadı" +
+          (error && error.message ? `: ${error.message}` : ".")
+      );
+    }
+  };
 
-  if (els.status) els.status.textContent = "koruma: açık";
+  if (typeof window.turnstile.ready === "function") {
+    window.turnstile.ready(renderWidget);
+  } else {
+    renderWidget();
+  }
 }
 
 function resetTurnstile() {
@@ -176,7 +207,10 @@ async function onSubmit(event) {
       return;
     }
 
-    showError(MESSAGES[data.error] || "Giriş yapılamadı. Bilgileri kontrol edin.");
+    showError(
+      (MESSAGES[data.error] || "Giriş yapılamadı. Bilgileri kontrol edin.") +
+        detailSuffix(data)
+    );
     if (els.status) els.status.textContent = "hatalı deneme";
     resetTurnstile();
   } catch {
