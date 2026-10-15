@@ -1,33 +1,52 @@
-// İçerik katmanı — yazılar `content/yazilar/*.md` dosyalarında saklanır.
+// İçerik katmanı — yazılar ÖZEL içerik deposunda (`bkaratas-content`) `yazilar/*.md`
+// dosyalarında saklanır. Depo = veritabanı (site reposunda içerik bulunmaz).
 //
-// Okuma stratejisi (kullanıcı isteği: istek anında GitHub API'ye gidilmesin):
-//   1. Önce deploy ile birlikte gelen YEREL dosyalardan okunur (fs).
-//   2. Yerel dosya bulunamazsa (ör. includeFiles yoksa) yalnızca o an
-//      raw.githubusercontent.com'dan (API değil) çekilir.
-//   3. Sonuç bellek içinde 24 saat önbelleğe alınır. Yeni deploy (yeni içerik)
-//      yeni örnek (instance) başlattığı için önbellek kendiliğinden tazelenir.
+// Okuma: GitHub Contents API (token ile) → bellek içi 60 sn önbellek.
+//   Depo PRIVATE olduğu için GITHUB_TOKEN ZORUNLUDUR; `raw.githubusercontent` kullanılamaz.
+//   Panel kaydettiğinde ilgili örnek (instance) önbelleği anında temizler; diğer örnekler
+//   en fazla 60 sn içinde tazelenir. İçerik güncellemesi DEPLOY GEREKTİRMEZ.
 //
 // Yazma işlemleri burada YAPILMAZ; panel GitHub Contents API kullanır (github.js).
-import { readFile, readdir } from "node:fs/promises";
-import path from "node:path";
 import matter from "gray-matter";
 
-const POSTS_DIR = "content/yazilar";
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 saat
+const POSTS_DIR = "yazilar";
+const CACHE_TTL = 60 * 1000; // 60 sn
 
 let cache = { at: 0, posts: null };
 
-function repo() {
-  return process.env.GITHUB_REPO || "burhankaratas/bkaratas.dev";
+/** İçerik deposu (özel). */
+export function contentRepo() {
+  return process.env.GITHUB_CONTENT_REPO || "burhankaratas/bkaratas-content";
 }
-function branch() {
-  return process.env.GITHUB_BRANCH || "main";
+/** İçerik deposu dalı. */
+export function contentBranch() {
+  return process.env.GITHUB_CONTENT_BRANCH || "main";
 }
 function apiBase() {
   return process.env.GITHUB_API_BASE || "https://api.github.com";
 }
-function localDir() {
-  return path.join(process.cwd(), POSTS_DIR);
+
+function authHeaders(extra = {}) {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) {
+    throw new Error(
+      "GITHUB_TOKEN tanımlı değil. Özel içerik deposunu okumak için Vercel ortam değişkenlerine ekleyin."
+    );
+  }
+  return {
+    Authorization: `Bearer ${token}`,
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+    "User-Agent": "bkaratas.dev",
+    ...extra,
+  };
+}
+
+function contentsUrl(filePath) {
+  return `${apiBase()}/repos/${contentRepo()}/contents/${filePath
+    .split("/")
+    .map(encodeURIComponent)
+    .join("/")}`;
 }
 
 /** Yalnızca güvenli slug karakterlerine izin ver (path traversal engeli). */
@@ -113,7 +132,6 @@ export function parsePost(raw, fallbackSlug = "") {
     category: asString(data.category).trim(),
     tags: asTags(data.tags),
     excerpt: asString(data.excerpt).trim(),
-    cover: asString(data.cover).trim(),
     status,
     date,
     createdAt,
@@ -135,7 +153,6 @@ export function serializePost(post) {
   if (post.category) data.category = post.category;
   if (post.tags && post.tags.length) data.tags = post.tags;
   if (post.excerpt) data.excerpt = post.excerpt;
-  if (post.cover) data.cover = post.cover;
   data.status = post.status;
   data.date = post.date;
   data.createdAt = post.createdAt;
@@ -148,18 +165,11 @@ export function serializePost(post) {
 
 /* ---------------------------------- okuma --------------------------------- */
 
-async function listLocalSlugs() {
-  const entries = await readdir(localDir(), { withFileTypes: true });
-  return entries
-    .filter((e) => e.isFile() && e.name.endsWith(".md"))
-    .map((e) => e.name.replace(/\.md$/, ""))
-    .filter((s) => normalizeSlug(s));
-}
-
-async function listRemoteSlugs() {
-  const url = `${apiBase()}/repos/${repo()}/contents/${POSTS_DIR}?ref=${branch()}`;
-  const response = await fetch(url, { headers: githubReadHeaders() });
-  if (!response.ok) throw new Error(`GitHub listeleme başarısız: ${response.status}`);
+async function listSlugs() {
+  const url = `${contentsUrl(POSTS_DIR)}?ref=${encodeURIComponent(contentBranch())}`;
+  const response = await fetch(url, { headers: authHeaders() });
+  if (response.status === 404) return [];
+  if (!response.ok) throw new Error(`GitHub listeleme başarısız (${response.status})`);
   const items = await response.json();
   if (!Array.isArray(items)) return [];
   return items
@@ -168,42 +178,17 @@ async function listRemoteSlugs() {
     .filter((s) => normalizeSlug(s));
 }
 
-function githubReadHeaders() {
-  const headers = {
-    Accept: "application/vnd.github+json",
-    "User-Agent": "bkaratas.dev",
-  };
-  if (process.env.GITHUB_TOKEN) {
-    headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-  }
-  return headers;
-}
-
-async function readLocalRaw(slug) {
-  return readFile(path.join(localDir(), `${slug}.md`), "utf8");
-}
-
-async function readRemoteRaw(slug) {
-  const url = `https://raw.githubusercontent.com/${repo()}/${branch()}/${POSTS_DIR}/${slug}.md`;
-  const response = await fetch(url, { headers: { "User-Agent": "bkaratas.dev" } });
-  if (!response.ok) return null;
+async function readRaw(slug) {
+  const url = `${contentsUrl(`${POSTS_DIR}/${slug}.md`)}?ref=${encodeURIComponent(contentBranch())}`;
+  const response = await fetch(url, {
+    headers: authHeaders({ Accept: "application/vnd.github.raw" }),
+  });
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error(`GitHub okuma başarısız (${response.status})`);
   return response.text();
 }
 
-async function readRaw(slug) {
-  try {
-    return await readLocalRaw(slug);
-  } catch {
-    /* yerelde yok; aşağıda uzaktan denenecek */
-  }
-  try {
-    return await readRemoteRaw(slug);
-  } catch {
-    return null;
-  }
-}
-
-/** Tek bir yazıyı listeden bağımsız okur (yerel → uzak ham dosya). */
+/** Tek bir yazıyı listeden bağımsız okur. */
 async function readSingle(slug) {
   const normalized = normalizeSlug(slug);
   if (!normalized) return null;
@@ -212,20 +197,7 @@ async function readSingle(slug) {
   return parsePost(raw, normalized);
 }
 
-async function listSlugs() {
-  try {
-    return await listLocalSlugs();
-  } catch {
-    /* yerel dizin yok; uzaktan liste */
-  }
-  try {
-    return await listRemoteSlugs();
-  } catch {
-    return [];
-  }
-}
-
-/** Tüm yazıları (taslak dahil) yükler; 24 saat bellek önbelleği kullanır. */
+/** Tüm yazıları (taslak dahil) yükler; bellek önbelleği kullanır. */
 export async function loadPosts({ force = false } = {}) {
   if (!force && cache.posts && Date.now() - cache.at < CACHE_TTL) {
     return cache.posts;
@@ -269,8 +241,7 @@ export async function getAny(slug) {
   const posts = await loadPosts();
   const found = posts.find((p) => p.slug === normalized);
   if (found) return found;
-  // Az önce commit'lenmiş olabilir (henüz yerel listeye/deploy'a girmemiş).
-  // Panel ve önizleme yolları bu yedeği kullanır; yol, dosyayı doğrudan okur.
+  // Önbellekte yok (ör. henüz tazelenmedi): dosyayı doğrudan oku.
   return readSingle(normalized);
 }
 
@@ -292,6 +263,5 @@ export async function listAllSummaries() {
     date: p.date || p.createdAt,
     updatedAt: p.updatedAt,
     readingMinutes: p.readingMinutes,
-    cover: p.cover,
   }));
 }

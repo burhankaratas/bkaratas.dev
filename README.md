@@ -19,9 +19,8 @@ Vanilla HTML / CSS / JavaScript — statik site. Yönetim paneli ise Vercel Func
 | `site.webmanifest` | PWA/uygulama meta verisi |
 | `<indexnow-key>.txt` | IndexNow doğrulama anahtarı (Bing/Yandex) |
 | `panel/` | Yönetim paneli: giriş (`/panel`) + kontrol ekranı (`/panel/dashboard`) + yazı yönetimi (`/panel/dashboard/yazilar`) |
-| `api/` | Vercel Functions: `auth/*`, `blog/*` (list · post · posts), `panel/*` (posts · uploads), `sitemap` (ortak kod `api/_lib/`) |
-| `content/yazilar/*.md` | Blog yazıları (frontmatter + HTML gövde). Depo = veritabanı; panel buraya commit'ler |
-| `content/uploads/` | Panelden yüklenen blog görselleri |
+| `api/` | Vercel Functions: `auth/*`, `blog/*` (list · post · posts), `panel/*` (posts), `sitemap` (ortak kod `api/_lib/`) |
+| `burhankaratas/bkaratas-content` | Blog içeriğinin **özel** deposu (ayrı repo): `yazilar/*.md` (frontmatter + HTML gövde). Depo = veritabanı; panel buraya commit'ler |
 | `middleware.js` | `/panel/dashboard` için sunucu tarafı oturum kapısı |
 | `scripts/hash-password.mjs` | Panel parolası için `PANEL_PASSWORD_HASH` üretici |
 | `vercel.json` | Panel/API yanıtlarına `noindex` başlıkları |
@@ -93,29 +92,28 @@ Alan adı **name.com** üzerinden alındı ve Vercel'in nameserver'larına yönl
 
 ## Blog
 
-Blog, veritabanı olmadan çalışır: **depo = içerik deposu**.
+Blog, veritabanı olmadan çalışır: **içerik deposu = veritabanı**. Yazılar siteden bağımsız,
+**özel** bir GitHub deposunda tutulur; site reposu (bu depo) **public** kalır ve içerik barındırmaz.
 
-- **Yazılar:** `content/yazilar/<slug>.md` — frontmatter (başlık, slug, kategori, etiketler,
-  özet, kapak, `status: published|draft`, tarihler, okuma süresi) + HTML gövde.
-- **Okuma (`api/_lib/content.js`):** Önce deploy ile gelen yerel dosyalar, yoksa
-  `raw.githubusercontent.com`; sonuç 24 saat bellek-içi önbellekte tutulur. İstek anında
-  GitHub API'sine gidilmez.
-- **Yayımlama (panel):** yazı, GitHub Contents API ile `content/yazilar/`'a commit'lenir;
-  Vercel otomatik yeniden deploy eder (~1 dk) ve içerik tazelenir.
+- **İçerik deposu:** `burhankaratas/bkaratas-content` (private) → `yazilar/<slug>.md`
+  — frontmatter (başlık, slug, kategori, etiketler, özet, `status: published|draft`, tarihler,
+  okuma süresi) + HTML gövde.
+- **Okuma (`api/_lib/content.js`):** GitHub Contents API (token ile) → 60 sn bellek-içi önbellek.
+  Depo private olduğu için `GITHUB_TOKEN` zorunludur; `raw.githubusercontent` kullanılmaz.
+- **Yayımlama (panel):** yazı, GitHub Contents API ile içerik deposuna commit'lenir; ilgili
+  örnek önbelleği anında temizler. **Deploy gerekmez**; içerik en fazla ~1 dakikada görünür.
 - **Sayfalar:** `/blog` (liste) ve `/blog/<slug>` (yazı) sunucu tarafında üretilen HTML'dir
   (`api/_lib/blog-html.js`) — SEO/Open Graph/JSON-LD içerir.
 - **Ana sayfa bölümü:** `#blog` bölümü `/api/blog/posts?limit=3` ile beslenir; yayımlanmış
   yazı yoksa bölüm ve menü bağlantısı gizli kalır.
 - **Taslak önizleme:** `status: draft` yazılar dışarıya 404 döner; **panel oturumu açıkken**
   `/blog/<slug>` adresinde "önizleme" rozetiyle gösterilir (`noindex`, `no-store`).
-- **Görseller:** panelden yüklenen görseller `content/uploads/` altına işlenir ve yazıda
-  `/content/uploads/...` olarak referanslanır.
+- **Görseller:** Ayrı yükleme sistemi yoktur; editörde araç çubuğundan görsel **URL'si** eklenir
+  (satır içi `<img>`). Gömülü `data:` görseller kabul edilmez.
 - **Site haritası:** `/sitemap.xml` dinamiktir ve yayımlanmış yazıları içerir. Kök dizinde
   statik `sitemap.xml` **bulunmamalıdır**; aksi hâlde statik dosya rewrite'ı gölgeler.
-- **Kaynak gizliliği:** `/content/*.md` adresleri `307` ile `/blog`'a yönlendirilir
-  (`vercel.json` → `redirects`); statik `.md` sunulmaz. **Uyarı:** Depo *public* iken
-  taslaklar GitHub arayüzü/raw üzerinden okunabilir — gerçek gizlilik için depo private
-  olmalı ve okuma yolunun GitHub API'sine taşınması gerekir.
+- **Gizlilik:** Taslaklar yalnızca private içerik deposunda durur; public site reposunda
+  içerik bulunmadığından taslaklar dışarıya sızmaz.
 
 ## İçerik güncelleme
 
@@ -156,12 +154,12 @@ Yerelde `.env.example` dosyasını `.env.local` olarak kopyalayın; Vercel'de
 | `PANEL_USERNAME` | — | Panel kullanıcı adı. Tanımlanmazsa `mbkaratas` kullanılır. |
 | `PANEL_PASSWORD_HASH` | ✅* | `node scripts/hash-password.mjs "parolanız"` çıktısı |
 | `PANEL_PASSWORD` | — | *Hash yerine basit düz parola (önerilmez).* |
-| `GITHUB_TOKEN` | ✅ | Fine-grained PAT (Contents: **Read and write**). Panel yazı/görselleri bu token ile depoya işler. |
-| `GITHUB_REPO` | — | Depo. Varsayılan: `burhankaratas/bkaratas.dev` |
-| `GITHUB_BRANCH` | — | Dal. Varsayılan: `main` |
+| `GITHUB_TOKEN` | ✅ | Fine-grained PAT, yalnızca `burhankaratas/bkaratas-content` (Contents: **Read and write**). Site içeriği bu token ile okur/yazar. |
+| `GITHUB_CONTENT_REPO` | — | İçerik deposu. Varsayılan: `burhankaratas/bkaratas-content` |
+| `GITHUB_CONTENT_BRANCH` | — | İçerik deposu dalı. Varsayılan: `main` |
 
 Fine-grained token: GitHub → **Settings → Developer settings → Personal access tokens → Fine-grained tokens** →
-Repository access: yalnızca bu depo · Permissions: **Contents → Read and write**.
+Repository access: yalnızca `burhankaratas/bkaratas-content` · Permissions: **Contents → Read and write**.
 
 ### 2. Cloudflare Turnstile
 
@@ -181,9 +179,9 @@ npx vercel dev        # http://localhost:3000/panel
 ### Sıradaki adımlar
 
 - Site içeriklerini (metin/çeviri) panelden yönetme
-- Medya yönetimi (yüklenen görselleri listeleme/silme)
+- Medya yönetimi (içerik deposundaki görselleri listeleme)
 - Mesajlar (iletişim formu)
 - Ayarlar
 
-> Blog tarafı tamamlandı. Ayrı bir veritabanı yoktur; içerik `content/yazilar/`
-> altındaki markdown dosyalarında ve `content/uploads/` altındaki görsellerde tutulur.
+> Blog tarafı tamamlandı. Ayrı bir veritabanı yoktur; içerik, özel
+> `burhankaratas/bkaratas-content` deposundaki `yazilar/*.md` dosyalarında tutulur.

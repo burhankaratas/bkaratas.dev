@@ -119,17 +119,11 @@ function layout({ title, description, canonical, body, ogImage, jsonLd, robots =
 }
 
 function postCard(post) {
-  const cover = post.cover
-    ? `<a class="card-cover" href="/blog/${encodeURIComponent(post.slug)}" tabindex="-1" aria-hidden="true">
-         <img src="${escapeHtml(post.cover)}" alt="" loading="lazy">
-       </a>`
-    : "";
   const category = post.category
     ? `<span class="dot-sep">·</span><span class="card-cat">${escapeHtml(post.category)}</span>`
     : "";
   return `
     <article class="post-card">
-      ${cover}
       <div class="card-main">
         <p class="card-meta mono">
           <time datetime="${escapeHtml(post.date || post.createdAt)}">${escapeHtml(formatDate(post.date || post.createdAt))}</time>
@@ -212,9 +206,6 @@ export function renderPostPage(post, allPosts = [], { preview = false } = {}) {
       <span>${post.status === "published" ? "Yayında" : "Taslak"} — yalnızca panel oturumuyla görülebilir, arama motorlarına kapalıdır.</span>
     </div>`
     : "";
-  const cover = post.cover
-    ? `<figure class="post-cover"><img src="${escapeHtml(post.cover)}" alt="${escapeHtml(post.title)}"></figure>`
-    : "";
   const tags = post.tags && post.tags.length
     ? `<ul class="chips">${post.tags.map((t) => `<li>${escapeHtml(t)}</li>`).join("")}</ul>`
     : "";
@@ -243,7 +234,6 @@ export function renderPostPage(post, allPosts = [], { preview = false } = {}) {
           <span class="dot-sep">·</span><span>${post.readingMinutes} dk okuma</span>${category}
         </p>
       </header>
-      ${cover}
       <div class="article-body">
         ${post.body || ""}
       </div>
@@ -272,7 +262,7 @@ export function renderPostPage(post, allPosts = [], { preview = false } = {}) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt || undefined,
-    image: post.cover ? absUrl(post.cover) : `${SITE}/assets/og.png`,
+    image: `${SITE}/assets/og.png`,
     datePublished: post.date || post.createdAt,
     dateModified: post.updatedAt || post.date || post.createdAt,
     author: { "@type": "Person", name: "Mahmut Burhan Karataş", url: SITE },
@@ -291,7 +281,6 @@ export function renderPostPage(post, allPosts = [], { preview = false } = {}) {
     description: post.excerpt || undefined,
     canonical: `/blog/${post.slug}`,
     body,
-    ogImage: post.cover,
     jsonLd,
     robots: preview ? "noindex, nofollow" : "index, follow",
   });

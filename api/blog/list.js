@@ -4,7 +4,7 @@ import { renderListPage, renderEmptyListPage } from "../_lib/blog-html.js";
 
 const HTML_HEADERS = {
   "Content-Type": "text/html; charset=utf-8",
-  "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
+  "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
   "X-Robots-Tag": "index, follow",
 };
 

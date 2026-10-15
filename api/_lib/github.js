@@ -1,22 +1,23 @@
-// GitHub Contents API yardımcıları — panel içeriği repoya bu katmanla işler.
+// GitHub Contents API yardımcıları — panel içeriği ÖZEL içerik deposuna bu katmanla işler.
 //
 // Gerekli ortam değişkeni:
-//   GITHUB_TOKEN  → repoya yazma yetkili (fine-grained) kişisel erişim token'ı
+//   GITHUB_TOKEN  → içerik deposuna yazma yetkili (fine-grained) kişisel erişim token'ı
 // Opsiyonel:
-//   GITHUB_REPO    (varsayılan: burhankaratas/bkaratas.dev)
-//   GITHUB_BRANCH  (varsayılan: main)
-//   GITHUB_API_BASE (test için; varsayılan: https://api.github.com)
+//   GITHUB_CONTENT_REPO    (varsayılan: burhankaratas/bkaratas-content)
+//   GITHUB_CONTENT_BRANCH  (varsayılan: main)
+//   GITHUB_API_BASE        (test için; varsayılan: https://api.github.com)
+import { contentRepo, contentBranch } from "./content.js";
 
 export function githubConfigured() {
   return Boolean(process.env.GITHUB_TOKEN);
 }
 
 export function repoSlug() {
-  return process.env.GITHUB_REPO || "burhankaratas/bkaratas.dev";
+  return contentRepo();
 }
 
 export function repoBranch() {
-  return process.env.GITHUB_BRANCH || "main";
+  return contentBranch();
 }
 
 function apiBase() {
@@ -123,9 +124,4 @@ export async function deleteFile(filePath, message) {
     throw new Error(`GitHub silme hatası (${response.status}): ${detail.slice(0, 200)}`);
   }
   return true;
-}
-
-/** Public repo'daki bir dosyanın ham (raw) URL'i — editör önizlemesi için. */
-export function rawUrl(filePath) {
-  return `https://raw.githubusercontent.com/${repoSlug()}/${repoBranch()}/${filePath}`;
 }

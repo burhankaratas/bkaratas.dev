@@ -328,16 +328,12 @@ function renderBlogCards() {
   list.innerHTML = blogPosts
     .map((post) => {
       const url = post.url || `/blog/${encodeURIComponent(post.slug)}`;
-      const cover = post.cover
-        ? `<a class="blog-card-cover" href="${escapeHtml(url)}" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(post.cover)}" alt="" loading="lazy"></a>`
-        : "";
       const date = formatBlogDate(post.date);
       const category = post.category
         ? `<span class="sep">·</span><span class="blog-card-cat">${escapeHtml(post.category)}</span>`
         : "";
       return `
         <article class="blog-card">
-          ${cover}
           <div class="blog-card-body">
             <p class="blog-card-meta">
               <span>${escapeHtml(date)}</span>

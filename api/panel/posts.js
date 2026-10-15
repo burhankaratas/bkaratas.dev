@@ -1,4 +1,5 @@
 // /api/panel/posts — panel yazı yönetimi (oturum korumalı).
+// ÖZEL içerik deposuna yazar (depo = veritabanı).
 //   GET    ?slug=...  → tek yazı (taslak dahil) ; slug yoksa özet liste
 //   POST              → yazı oluştur/güncelle (GitHub'a commit)
 //   DELETE ?slug=...  → yazı sil (GitHub'dan)
@@ -16,9 +17,9 @@ import {
 } from "../_lib/content.js";
 import { slugify, uniqueSlug } from "../_lib/slug.js";
 import { sanitizePostHtml } from "../_lib/sanitize.js";
-import { githubConfigured, putTextFile, deleteFile, repoSlug, repoBranch } from "../_lib/github.js";
+import { githubConfigured, putTextFile, deleteFile } from "../_lib/github.js";
 
-const POSTS_DIR = "content/yazilar";
+const POSTS_DIR = "yazilar";
 
 function asTags(value) {
   if (Array.isArray(value)) return value.map((t) => String(t).trim()).filter(Boolean).slice(0, 24);
@@ -26,14 +27,6 @@ function asTags(value) {
     return value.split(",").map((t) => t.trim()).filter(Boolean).slice(0, 24);
   }
   return [];
-}
-
-/** Editör önizlemesi için eklenen GitHub raw görsel URL'lerini yerel yola çevirir. */
-function normalizeUploadUrls(html) {
-  const rawPrefix = `https://raw.githubusercontent.com/${repoSlug()}/${repoBranch()}/`;
-  return String(html || "")
-    .split(rawPrefix)
-    .join("/");
 }
 
 function methodNotAllowed(allow) {
@@ -49,13 +42,18 @@ export default {
     const slugParam = normalizeSlug(url.searchParams.get("slug"));
 
     if (request.method === "GET") {
-      if (slugParam) {
-        const post = await getAny(slugParam);
-        if (!post) return json({ ok: false, error: "not_found" }, 404);
-        return json({ ok: true, post });
+      try {
+        if (slugParam) {
+          const post = await getAny(slugParam);
+          if (!post) return json({ ok: false, error: "not_found" }, 404);
+          return json({ ok: true, post });
+        }
+        const posts = await listAllSummaries();
+        return json({ ok: true, count: posts.length, posts });
+      } catch (error) {
+        console.error("[panel.posts.get]", error);
+        return json({ ok: false, error: "content_error", message: String(error.message || "") }, 502);
       }
-      const posts = await listAllSummaries();
-      return json({ ok: true, count: posts.length, posts });
     }
 
     if (request.method === "DELETE") {
@@ -101,23 +99,26 @@ export default {
       const status = body?.status === "published" ? "published" : "draft";
       const category = String(body?.category || "").trim().slice(0, 60);
       const tags = asTags(body?.tags);
-      const rawBody = String(body?.body || "");
-      const safeBody = sanitizePostHtml(normalizeUploadUrls(rawBody));
+      const safeBody = sanitizePostHtml(String(body?.body || ""));
       const excerpt = String(body?.excerpt || "").trim().slice(0, 320) || deriveExcerpt(safeBody);
-      const cover = normalizeUploadUrls(String(body?.cover || "").trim());
 
       // Hedef slug: düzenlemede sabit kalır; yenide başlıktan üretilir.
       const requested = normalizeSlug(body?.slug);
       let slug;
-      if (requested) {
-        slug = requested;
-      } else {
-        const all = await loadPosts();
-        slug = uniqueSlug(slugify(title), all.map((p) => p.slug));
+      let existing = null;
+      try {
+        if (requested) {
+          slug = requested;
+        } else {
+          const all = await loadPosts();
+          slug = uniqueSlug(slugify(title), all.map((p) => p.slug));
+        }
+        existing = await getAny(slug);
+      } catch (error) {
+        console.error("[panel.posts.lookup]", error);
+        return json({ ok: false, error: "content_error", message: String(error.message || "") }, 502);
       }
-      // Yeni kayıt sırasında istenen slug doluysa (başka yazı) yine de onu günceller.
 
-      const existing = await getAny(slug);
       const now = new Date().toISOString();
       const post = {
         slug,
@@ -125,7 +126,6 @@ export default {
         category,
         tags,
         excerpt,
-        cover,
         status,
         body: safeBody,
         createdAt: existing?.createdAt || now,
@@ -137,11 +137,7 @@ export default {
       try {
         const content = serializePost(post);
         const action = existing ? "güncellendi" : "yeni yazı";
-        await putTextFile(
-          `${POSTS_DIR}/${slug}.md`,
-          content,
-          `Panel: ${action} — ${title}`
-        );
+        await putTextFile(`${POSTS_DIR}/${slug}.md`, content, `Panel: ${action} — ${title}`);
         invalidateContentCache();
         return json({ ok: true, slug, status });
       } catch (error) {

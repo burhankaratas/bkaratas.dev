@@ -1,13 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-    "api/blog/*.js": { "includeFiles": "content/yazilar/**" },
-    "api/panel/posts.js": { "includeFiles": "content/yazilar/**" },
-    "api/sitemap.js": { "includeFiles": "content/yazilar/**" }
-  },
-  "redirects": [
-    { "source": "/content/:path(.*\\.md)", "destination": "/blog", "permanent": false }
-  ],
   "rewrites": [
     { "source": "/blog", "destination": "/api/blog/list" },
     { "source": "/blog/", "destination": "/api/blog/list" },
@@ -40,13 +32,7 @@
       "source": "/blog(.*)",
       "headers": [
         { "key": "X-Robots-Tag", "value": "index, follow" },
-        { "key": "Cache-Control", "value": "public, s-maxage=86400, stale-while-revalidate=604800" }
-      ]
-    },
-    {
-      "source": "/content/(.*)",
-      "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+        { "key": "Cache-Control", "value": "public, s-maxage=60, stale-while-revalidate=300" }
       ]
     }
   ]

@@ -1,5 +1,5 @@
 // GET /api/blog/posts — yayımlanmış yazıların özet listesi (JSON).
-// Ana sayfadaki blog bölümü bu ucu kullanır. 24 saat CDN önbelleği.
+// Ana sayfadaki blog bölümü bu ucu kullanır. Kısa CDN önbelleği (içerik deploy'suz güncellenir).
 import { listPublished, deriveExcerpt } from "../_lib/content.js";
 import { json } from "../_lib/http.js";
 
@@ -29,13 +29,12 @@ export default {
       tags: p.tags,
       date: p.date || p.createdAt,
       readingMinutes: p.readingMinutes,
-      cover: p.cover || "",
       url: `/blog/${p.slug}`,
     }));
     if (limit) result = result.slice(0, limit);
 
     return json({ ok: true, count: result.length, posts: result }, 200, {
-      "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
+      "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
     });
   },
 };
