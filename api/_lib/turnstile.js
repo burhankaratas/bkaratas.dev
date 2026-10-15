@@ -6,7 +6,8 @@ const SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverif
 /**
  * Turnstile token'ını Cloudflare'e doğrulatır.
  * - Secret yoksa: üretimde hata fırlatır; geliştirmede atlar (kolaylık için).
- * - Token yoksa/geçersizse false döndürür.
+ * - Dönüş: { ok: true } veya { ok: false, reason, errorCodes }
+ *   errorCodes: Cloudflare'in döndürdüğü hata kodları (örn. invalid-input-secret).
  */
 export async function verifyTurnstile(token, ip) {
   const secret = process.env.TURNSTILE_SECRET_KEY;
@@ -16,10 +17,12 @@ export async function verifyTurnstile(token, ip) {
       throw new Error("TURNSTILE_SECRET_KEY tanımlı değil.");
     }
     console.warn("[turnstile] TURNSTILE_SECRET_KEY yok — doğrulama atlandı (yalnızca geliştirme).");
-    return true;
+    return { ok: true, reason: "disabled" };
   }
 
-  if (!token || typeof token !== "string") return false;
+  if (!token || typeof token !== "string") {
+    return { ok: false, reason: "missing_token" };
+  }
 
   const body = new URLSearchParams({ secret, response: token });
   if (ip && ip !== "0.0.0.0") body.set("remoteip", ip);
@@ -30,10 +33,21 @@ export async function verifyTurnstile(token, ip) {
     signal: AbortSignal.timeout(5000),
   });
 
-  if (!response.ok) {
-    throw new Error(`Turnstile siteverify HTTP ${response.status}`);
+  // Cloudflare, geçersiz girdilerde 400 döndürebilir ama gövdede yine de
+  // JSON (error-codes) bulunur. Bu yüzden gövdeyi durum kodundan bağımsız okuyoruz.
+  const data = await response.json().catch(() => null);
+
+  if (!data) {
+    throw new Error(`Turnstile siteverify yanıtı okunamadı (HTTP ${response.status}).`);
   }
 
-  const data = await response.json().catch(() => null);
-  return Boolean(data && data.success === true);
+  if (data.success === true) {
+    return { ok: true };
+  }
+
+  return {
+    ok: false,
+    reason: "rejected",
+    errorCodes: Array.isArray(data["error-codes"]) ? data["error-codes"] : [],
+  };
 }

@@ -38,8 +38,15 @@ export default {
 
     // 1) Bot koruması
     try {
-      const human = await verifyTurnstile(turnstileToken, ip);
-      if (!human) {
+      const result = await verifyTurnstile(turnstileToken, ip);
+      if (!result.ok) {
+        const codes = result.errorCodes || [];
+        if (codes.includes("invalid-input-secret")) {
+          console.error(
+            "[login] Turnstile secret key geçersiz — TURNSTILE_SECRET_KEY, Site Key ile karıştırılmış olabilir."
+          );
+          return json({ ok: false, error: "turnstile_misconfigured" }, 500);
+        }
         return json({ ok: false, error: "turnstile_failed" }, 400);
       }
     } catch (error) {

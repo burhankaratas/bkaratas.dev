@@ -18,6 +18,8 @@ const MESSAGES = {
   invalid_credentials: "Kullanıcı adı veya parola hatalı. Lütfen tekrar deneyin.",
   turnstile_failed: "Bot doğrulaması başarısız oldu. Sayfayı yenileyip tekrar deneyin.",
   turnstile_unavailable: "Bot doğrulaması şu anda kullanılamıyor. Daha sonra tekrar deneyin.",
+  turnstile_misconfigured:
+    "Turnstile anahtarları hatalı: Site Key ve Secret Key karıştırılmış olabilir. Ortam değişkenlerini kontrol edin.",
   too_many_attempts: "Çok fazla hatalı deneme yapıldı. Lütfen biraz sonra tekrar deneyin.",
   server_misconfigured: "Sunucu yapılandırması eksik. Ortam değişkenlerini kontrol edin.",
   invalid_body: "İstek geçersiz. Sayfayı yenileyip tekrar deneyin.",
@@ -87,8 +89,8 @@ async function setupTurnstile() {
 
   if (!siteKey) {
     els.turnstile.innerHTML =
-      '<p class="panel-note">Turnstile anahtarı tanımlı değil — bot koruması devre dışı (geliştirme).</p>';
-    if (els.status) els.status.textContent = "koruma: kapalı";
+      '<p class="panel-note">Turnstile Site Key tanımlı değil — Vercel ortam değişkenlerini kontrol edin.</p>';
+    if (els.status) els.status.textContent = "koruma: kurulmamış";
     return;
   }
 
