@@ -157,14 +157,26 @@ function pollForTurnstile(tries) {
 }
 
 async function setupTurnstile() {
+  let configError = "";
   try {
     const response = await fetch("/api/auth/config", {
       headers: { Accept: "application/json" },
     });
     const data = await response.json();
     turnstileSiteKey = (data && data.turnstileSiteKey) || "";
+    if (!response.ok && data && data.error) configError = data.error;
   } catch {
     /* aşağıda ele alınıyor */
+  }
+
+  if (configError === "turnstile_keys_swapped") {
+    els.turnstile.innerHTML =
+      '<p class="panel-note">Turnstile Site Key ve Secret Key yer değiştirmiş görünüyor. Site Key ≈ 24, Secret Key ≈ 35 karakterdir. Vercel ortam değişkenlerini düzeltin.</p>';
+    setStatus("koruma: anahtar hatası");
+    showError(
+      "Turnstile anahtarları yer değiştirmiş: Site Key yerine Secret Key girilmiş (Site Key ≈ 24, Secret ≈ 35 karakter). Vercel ortam değişkenlerini düzeltin."
+    );
+    return;
   }
 
   if (!turnstileSiteKey) {
