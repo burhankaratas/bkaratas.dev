@@ -5,11 +5,13 @@
     "api/panel/posts.js": { "includeFiles": "content/yazilar/**" },
     "api/sitemap.js": { "includeFiles": "content/yazilar/**" }
   },
+  "redirects": [
+    { "source": "/content/:path(.*\\.md)", "destination": "/blog", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/blog", "destination": "/api/blog/list" },
     { "source": "/blog/", "destination": "/api/blog/list" },
     { "source": "/blog/:slug", "destination": "/api/blog/post?slug=:slug" },
-    { "source": "/content/:path(.*\\.md)", "destination": "/api/deny" },
     { "source": "/sitemap.xml", "destination": "/api/sitemap" }
   ],
   "headers": [
