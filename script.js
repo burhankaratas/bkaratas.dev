@@ -12,6 +12,7 @@ const I18N = {
     "nav.about": "Hakkımda",
     "nav.skills": "Yetenekler",
     "nav.projects": "Projeler",
+    "nav.blog": "Blog",
     "nav.contact": "İletişim",
 
     "hero.role": "Yazılım Geliştirici",
@@ -61,6 +62,13 @@ const I18N = {
     "projects.p6.desc":
       "Python ile yazdığım çok amaçlı siber güvenlik aracı. TCP port taraması, URL'den IP çözümleme ve sözlük tabanlı brute force modülleriyle temel ağ güvenliği testleri için konsol arayüzü.",
 
+    "blog.label": "Blog",
+    "blog.title": "Yazdıklarım",
+    "blog.intro": "Yazılım, ürün geliştirme ve öğrendiklerim üzerine notlar.",
+    "blog.all": "tüm yazılar →",
+    "blog.readMore": "devamını oku →",
+    "blog.minRead": "dk okuma",
+
     "contact.label": "İletişim",
     "contact.title": "Birlikte çalışalım",
     "contact.desc": "Proje fikriniz, iş birliği ya da sadece merhaba demek için — her zaman açığım.",
@@ -80,6 +88,7 @@ const I18N = {
     "nav.about": "About",
     "nav.skills": "Skills",
     "nav.projects": "Projects",
+    "nav.blog": "Blog",
     "nav.contact": "Contact",
 
     "hero.role": "Software Developer",
@@ -129,6 +138,13 @@ const I18N = {
     "projects.p6.desc":
       "A multi-purpose cybersecurity tool written in Python. TCP port scanning, URL-to-IP resolution and wordlist-based brute force — a console interface for basic network security testing.",
 
+    "blog.label": "Blog",
+    "blog.title": "Writing",
+    "blog.intro": "Notes on software, product development and what I learn along the way.",
+    "blog.all": "all posts →",
+    "blog.readMore": "read more →",
+    "blog.minRead": "min read",
+
     "contact.label": "Contact",
     "contact.title": "Let's work together",
     "contact.desc": "Whether it's a project idea, a collaboration or just saying hello — I'm all ears.",
@@ -176,6 +192,8 @@ function applyLanguage(lang) {
   document.querySelectorAll(".lang-switch button").forEach((btn) => {
     btn.classList.toggle("is-active", btn.dataset.lang === lang);
   });
+
+  if (typeof renderBlogCards === "function") renderBlogCards();
 
   try {
     localStorage.setItem(STORE_KEY, lang);
@@ -277,11 +295,104 @@ function initScrollProgress() {
   update();
 }
 
+/* ---------- Blog (ana sayfa bölümü) ---------- */
+
+const BLOG_AYLAR = [
+  "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+  "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık",
+];
+
+let blogPosts = [];
+
+function escapeHtml(value) {
+  return String(value == null ? "" : value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function formatBlogDate(iso) {
+  const time = Date.parse(iso || "");
+  if (!time) return "";
+  const d = new Date(time);
+  return `${d.getDate()} ${BLOG_AYLAR[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function renderBlogCards() {
+  const list = document.getElementById("home-blog-list");
+  if (!list || !blogPosts.length) return;
+  const dict = I18N[document.documentElement.lang] || I18N.tr;
+
+  list.innerHTML = blogPosts
+    .map((post) => {
+      const url = post.url || `/blog/${encodeURIComponent(post.slug)}`;
+      const cover = post.cover
+        ? `<a class="blog-card-cover" href="${escapeHtml(url)}" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(post.cover)}" alt="" loading="lazy"></a>`
+        : "";
+      const date = formatBlogDate(post.date);
+      const category = post.category
+        ? `<span class="sep">·</span><span class="blog-card-cat">${escapeHtml(post.category)}</span>`
+        : "";
+      return `
+        <article class="blog-card">
+          ${cover}
+          <div class="blog-card-body">
+            <p class="blog-card-meta">
+              <span>${escapeHtml(date)}</span>
+              <span class="sep">·</span><span>${post.readingMinutes} ${escapeHtml(dict["blog.minRead"] || "dk okuma")}</span>
+              ${category}
+            </p>
+            <h3><a href="${escapeHtml(url)}">${escapeHtml(post.title)}</a></h3>
+            ${post.excerpt ? `<p class="blog-card-excerpt">${escapeHtml(post.excerpt)}</p>` : ""}
+            <a class="blog-card-more" href="${escapeHtml(url)}">${escapeHtml(dict["blog.readMore"] || "devamını oku →")}</a>
+          </div>
+        </article>`;
+    })
+    .join("");
+}
+
+async function initBlog() {
+  const section = document.getElementById("blog");
+  const list = document.getElementById("home-blog-list");
+  const navBlog = document.getElementById("nav-blog");
+  const contactNum = document.getElementById("contact-sec-num");
+  const navContactNum = document.getElementById("nav-contact-num");
+  if (!section || !list) return;
+
+  try {
+    const response = await fetch("/api/blog/posts?limit=3", {
+      headers: { Accept: "application/json" },
+    });
+    const data = await response.json();
+    if (data && data.ok && Array.isArray(data.posts)) blogPosts = data.posts;
+  } catch (_) {
+    blogPosts = [];
+  }
+
+  if (!blogPosts.length) {
+    // Yayımlanmış yazı yok → bölüm ve menü bağlantısı gizli kalır.
+    section.hidden = true;
+    if (navBlog) navBlog.hidden = true;
+    if (contactNum) contactNum.textContent = "04";
+    if (navContactNum) navContactNum.textContent = "04";
+    return;
+  }
+
+  renderBlogCards();
+  section.hidden = false;
+  if (navBlog) navBlog.hidden = false;
+  if (contactNum) contactNum.textContent = "05";
+  if (navContactNum) navContactNum.textContent = "05";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initLanguage();
   initMobileNav();
   initReveal();
   initScrollProgress();
+  initBlog();
 
   const year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());

@@ -1,5 +1,17 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/blog/*.js": { "includeFiles": "content/yazilar/**" },
+    "api/panel/posts.js": { "includeFiles": "content/yazilar/**" },
+    "api/sitemap.js": { "includeFiles": "content/yazilar/**" }
+  },
+  "rewrites": [
+    { "source": "/blog", "destination": "/api/blog/list" },
+    { "source": "/blog/", "destination": "/api/blog/list" },
+    { "source": "/blog/:slug", "destination": "/api/blog/post?slug=:slug" },
+    { "source": "/content/:path(.*\\.md)", "destination": "/api/deny" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" }
+  ],
   "headers": [
     {
       "source": "/panel(.*)",
@@ -9,10 +21,30 @@
       ]
     },
     {
-      "source": "/api(.*)",
+      "source": "/api/auth(.*)",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
         { "key": "Cache-Control", "value": "no-store" }
+      ]
+    },
+    {
+      "source": "/api/panel(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    },
+    {
+      "source": "/blog(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "index, follow" },
+        { "key": "Cache-Control", "value": "public, s-maxage=86400, stale-while-revalidate=604800" }
+      ]
+    },
+    {
+      "source": "/content/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
     }
   ]
