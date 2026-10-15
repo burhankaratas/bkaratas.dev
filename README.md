@@ -104,9 +104,9 @@ yalnızca `/panel` ve `/api` yolları dinamiktir.
 
 ### Nasıl çalışır?
 
-1. **Giriş sayfası** `/panel` — parola alanı + Cloudflare Turnstile widget'ı.
+1. **Giriş sayfası** `/panel` — kullanıcı adı + parola alanları + Cloudflare Turnstile widget'ı.
 2. **`POST /api/auth/login`** — önce Turnstile token'ı Cloudflare'e sunucu tarafında doğrulatılır,
-   sonra parola kontrol edilir; başarılıysa imzalı (HMAC) bir `HttpOnly` çerez verilir.
+   sonra kullanıcı adı ve parola kontrol edilir; başarılıysa imzalı (HMAC) bir `HttpOnly` çerez verilir.
 3. **`middleware.js`** — `/panel/dashboard` isteklerini çerez geçerli değilse `/panel`'e yönlendirir.
 4. **`POST /api/auth/logout`** — çerezi siler. **`GET /api/auth/session`** — oturum durumu.
 
@@ -125,6 +125,7 @@ Yerelde `.env.example` dosyasını `.env.local` olarak kopyalayın; Vercel'de
 | `PANEL_SESSION_SECRET` | ✅ | Oturum imzalama anahtarı. `openssl rand -hex 32` |
 | `TURNSTILE_SITE_KEY` | ✅ | Cloudflare Turnstile site key (herkese açık) |
 | `TURNSTILE_SECRET_KEY` | ✅ | Cloudflare Turnstile secret key (gizli) |
+| `PANEL_USERNAME` | — | Panel kullanıcı adı. Tanımlanmazsa `mbkaratas` kullanılır. |
 | `PANEL_PASSWORD_HASH` | ✅* | `node scripts/hash-password.mjs "parolanız"` çıktısı |
 | `PANEL_PASSWORD` | — | *Hash yerine basit düz parola (önerilmez).* |
 

@@ -47,3 +47,20 @@ export function verifyPassword(input) {
 
   throw new Error("PANEL_PASSWORD_HASH ya da PANEL_PASSWORD tanımlı değil.");
 }
+
+/** Kullanıcı adını doğrular (varsayılan: "mbkaratas", büyük/küçük harf duyarsız). */
+export function verifyUsername(input) {
+  const expected = (process.env.PANEL_USERNAME || "mbkaratas").trim().toLowerCase();
+  if (typeof input !== "string" || input.trim().length === 0) return false;
+  return constantTimeEqualString(input.trim().toLowerCase(), expected);
+}
+
+/**
+ * Kullanıcı adı + parolayı birlikte doğrular.
+ * Hangi alanın hatalı olduğunu dışarı sızdırmamak için tek sonuç döndürür.
+ */
+export function verifyCredentials(username, password) {
+  const userOk = verifyUsername(username);
+  const passwordOk = verifyPassword(password);
+  return userOk && passwordOk;
+}

@@ -30,10 +30,25 @@
 
         <h1 id="login-title">Yönetim Paneli</h1>
         <p class="auth-lede">
-          Devam etmek için parolanızı girin. Bu alan botlara karşı Turnstile ile korunur.
+          Devam etmek için kullanıcı adı ve parolanızla giriş yapın.
         </p>
 
         <form id="login-form" novalidate>
+          <label class="field">
+            <span class="field-key">Kullanıcı Adı</span>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              autocomplete="username"
+              autocapitalize="none"
+              autocorrect="off"
+              spellcheck="false"
+              placeholder="kullanıcı adı"
+              required
+              autofocus>
+          </label>
+
           <label class="field">
             <span class="field-key">Parola</span>
             <input
@@ -42,8 +57,7 @@
               type="password"
               autocomplete="current-password"
               placeholder="••••••••"
-              required
-              autofocus>
+              required>
           </label>
 
           <div id="turnstile" class="turnstile-slot" aria-live="polite"></div>

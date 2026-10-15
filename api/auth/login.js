@@ -3,7 +3,7 @@
 // 1) Turnstile bot doğrulaması  2) Parola kontrolü  3) İmzalı oturum çerezi
 import { json, getClientIp } from "../_lib/http.js";
 import { verifyTurnstile } from "../_lib/turnstile.js";
-import { verifyPassword } from "../_lib/password.js";
+import { verifyCredentials } from "../_lib/password.js";
 import { createSession, signSession, sessionCookie } from "../_lib/session.js";
 import { rateLimit } from "../_lib/ratelimit.js";
 
@@ -31,6 +31,7 @@ export default {
       return json({ ok: false, error: "invalid_body" }, 400);
     }
 
+    const username = typeof body?.username === "string" ? body.username : "";
     const password = typeof body?.password === "string" ? body.password : "";
     const turnstileToken =
       typeof body?.turnstileToken === "string" ? body.turnstileToken : "";
@@ -46,13 +47,13 @@ export default {
       return json({ ok: false, error: "turnstile_unavailable" }, 502);
     }
 
-    // 2) Parola
+    // 2) Kullanıcı adı + parola
     try {
-      if (!verifyPassword(password)) {
+      if (!verifyCredentials(username, password)) {
         return json({ ok: false, error: "invalid_credentials" }, 401);
       }
     } catch (error) {
-      console.error("[login] password", error);
+      console.error("[login] credentials", error);
       return json({ ok: false, error: "server_misconfigured" }, 500);
     }
 

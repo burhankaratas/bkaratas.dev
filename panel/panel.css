@@ -171,11 +171,9 @@ h1, h2, h3 {
 .field input:focus { outline: none; border-color: var(--accent); background: var(--panel-2); }
 
 .turnstile-slot {
-  min-height: 0;
   margin-bottom: 20px;
 }
-.turnstile-slot:empty { display: none; }
-.turnstile-slot .panel-note { padding: 12px 0 0; }
+.turnstile-slot .panel-note { padding: 4px 0 0; }
 
 .auth-submit {
   width: 100%;

@@ -3,6 +3,7 @@
 
 const els = {
   form: document.getElementById("login-form"),
+  username: document.getElementById("username"),
   password: document.getElementById("password"),
   submit: document.getElementById("login-submit"),
   error: document.getElementById("login-error"),
@@ -14,7 +15,7 @@ let turnstileToken = "";
 let turnstileWidgetId = null;
 
 const MESSAGES = {
-  invalid_credentials: "Parola hatalı. Lütfen tekrar deneyin.",
+  invalid_credentials: "Kullanıcı adı veya parola hatalı. Lütfen tekrar deneyin.",
   turnstile_failed: "Bot doğrulaması başarısız oldu. Sayfayı yenileyip tekrar deneyin.",
   turnstile_unavailable: "Bot doğrulaması şu anda kullanılamıyor. Daha sonra tekrar deneyin.",
   too_many_attempts: "Çok fazla hatalı deneme yapıldı. Lütfen biraz sonra tekrar deneyin.",
@@ -138,7 +139,14 @@ async function onSubmit(event) {
   event.preventDefault();
   clearError();
 
+  const username = els.username.value.trim();
   const password = els.password.value;
+
+  if (!username) {
+    showError("Lütfen kullanıcı adınızı girin.");
+    els.username.focus();
+    return;
+  }
   if (!password) {
     showError("Lütfen parolanızı girin.");
     els.password.focus();
@@ -152,7 +160,7 @@ async function onSubmit(event) {
     const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password, turnstileToken }),
+      body: JSON.stringify({ username, password, turnstileToken }),
     });
 
     const data = await response.json().catch(() => ({}));
