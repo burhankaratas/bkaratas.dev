@@ -8,6 +8,8 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@vercel/functions": "^3.10.1"
+    "@vercel/functions": "^3.10.1",
+    "gray-matter": "^4.0.3",
+    "sanitize-html": "^2.18.1"
   }
 }
