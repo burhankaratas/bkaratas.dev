@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Defter — Mahmut Burhan Karataş | bkaratas.dev</title>
+  <meta name="description" content="Defter: kitap ve dergilerden notlar için kişiye özel geliştirdiğim okuma notu ve alıntı arşivi. Next.js, React, Vercel, PWA. Ekran görüntüleriyle proje ayrıntıları.">
+  <meta name="author" content="Mahmut Burhan Karataş">
+  <meta name="robots" content="index, follow">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0a0b">
+
+  <link rel="canonical" href="https://bkaratas.dev/projeler/defter">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="bkaratas.dev">
+  <meta property="og:title" content="Defter — Mahmut Burhan Karataş">
+  <meta property="og:description" content="Kitap ve dergilerden notlar için kişiye özel geliştirdiğim okuma notu ve alıntı arşivi. Next.js, React, Vercel, PWA.">
+  <meta property="og:url" content="https://bkaratas.dev/projeler/defter">
+  <meta property="og:image" content="https://bkaratas.dev/assets/defter/gorseller/masaustu/01-ana-sayfa.jpg">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:locale:alternate" content="en_US">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Defter — Mahmut Burhan Karataş">
+  <meta name="twitter:description" content="Kitap ve dergilerden notlar için kişiye özel geliştirdiğim okuma notu ve alıntı arşivi.">
+  <meta name="twitter:image" content="https://bkaratas.dev/assets/defter/gorseller/masaustu/01-ana-sayfa.jpg">
+
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#icerik" data-i18n="a11y.skip">İçeriğe geç</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="bkaratas.dev">
+        <span class="brand-slash">//</span><span class="brand-name">bkaratas.dev</span>
+      </a>
+
+      <nav id="site-nav" class="site-nav">
+        <a href="/#hakkimda"><i>01</i><span data-i18n="nav.about">Hakkımda</span></a>
+        <a href="/#yetenekler"><i>02</i><span data-i18n="nav.skills">Yetenekler</span></a>
+        <a href="/#projeler"><i>03</i><span data-i18n="nav.projects">Projeler</span></a>
+        <a href="/#iletisim"><i>04</i><span data-i18n="nav.contact">İletişim</span></a>
+      </nav>
+
+      <div class="header-controls">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang="tr" class="is-active">TR</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" data-i18n="nav.menu">Menü</button>
+      </div>
+    </div>
+    <div class="scroll-progress" aria-hidden="true"><span id="progress-bar"></span></div>
+  </header>
+
+  <main id="icerik">
+
+    <!-- ÜSTEK ALAN: breadcrumb + başlık + meta -->
+    <div class="detail-top">
+      <div class="container">
+
+        <div class="detail-back-row">
+          <a href="/#projeler" class="detail-back-link" data-i18n="detail.back">← Projeler</a>
+          <span class="detail-crumb">projeler/defter</span>
+        </div>
+
+        <div class="detail-title-block">
+          <h1 class="detail-title">Defter</h1>
+          <span class="pr-status pr-status--private">
+            <i></i>
+            <span class="tr-only" data-i18n="projects.private">Özel</span>
+            <span class="en-only">Private</span>
+          </span>
+        </div>
+
+        <p class="detail-subtitle">2026 · v0.1.0 · Next.js · React · Vercel · PWA</p>
+
+        <div class="detail-meta-grid">
+          <div class="detail-meta-cell">
+            <span class="detail-meta-k tr-only">Proje</span>
+            <span class="detail-meta-k en-only">Project</span>
+            <span class="detail-meta-v">Defter</span>
+          </div>
+          <div class="detail-meta-cell">
+            <span class="detail-meta-k tr-only">Alan adı</span>
+            <span class="detail-meta-k en-only">Domain</span>
+            <span class="detail-meta-v">
+              <span class="tr-only">omerkaratas.com.tr (erişim kısıtlı)</span>
+              <span class="en-only">omerkaratas.com.tr (restricted)</span>
+            </span>
+          </div>
+          <div class="detail-meta-cell">
+            <span class="detail-meta-k tr-only">Tür</span>
+            <span class="detail-meta-k en-only">Type</span>
+            <span class="detail-meta-v">
+              <span class="tr-only">Not ve alıntı arşivi · PWA</span>
+              <span class="en-only">Notes & quote archive · PWA</span>
+            </span>
+          </div>
+          <div class="detail-meta-cell">
+            <span class="detail-meta-k tr-only">Rolüm</span>
+            <span class="detail-meta-k en-only">My role</span>
+            <span class="detail-meta-v">
+              <span class="tr-only">Tasarım · geliştirme · yayına alma</span>
+              <span class="en-only">Design · development · deployment</span>
+            </span>
+          </div>
+          <div class="detail-meta-cell">
+            <span class="detail-meta-k tr-only">Yıl</span>
+            <span class="detail-meta-k en-only">Year</span>
+            <span class="detail-meta-v">2026</span>
+          </div>
+          <div class="detail-meta-cell">
+            <span class="detail-meta-k tr-only">Sürüm</span>
+            <span class="detail-meta-k en-only">Version</span>
+            <span class="detail-meta-v">v0.1.0</span>
+          </div>
+          <div class="detail-meta-cell">
+            <span class="detail-meta-k tr-only">Teknolojiler</span>
+            <span class="detail-meta-k en-only">Stack</span>
+            <span class="detail-meta-v">Next.js · React · Vercel · PWA</span>
+          </div>
+          <div class="detail-meta-cell">
+            <span class="detail-meta-k tr-only">Durum</span>
+            <span class="detail-meta-k en-only">Status</span>
+            <span class="detail-meta-v">
+              <span class="tr-only">Aktif kullanımda · Özel</span>
+              <span class="en-only">In active use · Private</span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- KAPAK GÖRSELİ -->
+    <div class="detail-cover">
+      <div class="container">
+        <div class="detail-cover-inner">
+          <img
+            src="../../assets/defter/gorseller/masaustu/01-ana-sayfa.jpg"
+            alt="Defter — ana sayfa (koyu tema)"
+            loading="eager"
+            width="927" height="855"
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- GİRİŞ + PROBLEM / ÇÖZÜM -->
+    <section class="detail-section">
+      <div class="container">
+        <span class="detail-section-label"><span class="accent">01 //</span>
+          <span class="tr-only">Giriş</span><span class="en-only">Overview</span>
+        </span>
+
+        <p class="detail-intro-text tr-only">
+          Defter, okuduğu kitap ve dergilerden not ve alıntı biriktiren bir kişi için özel olarak
+          geliştirdiğim bir dijital not defteri. Amaç basit: okurken altı çizilen bir cümleyi hızla
+          kaydetmek, onu hangi kitaptan ve hangi sayfadan aldığını kaybetmeden saklamak, aylar sonra
+          tek bir kelimeyle geri bulabilmek.
+        </p>
+        <p class="detail-intro-text tr-only">
+          Uygulama tek bir kişiye hizmet ettiği için herkese açık değil: arama motorlarına kapalı ve
+          yalnızca sahibinin onayladığı cihazlardan açılabiliyor. Bu yüzden canlı bir bağlantı veya
+          kaynak kodu yerine burada ekran görüntüleriyle anlatıyorum.
+        </p>
+
+        <p class="detail-intro-text en-only">
+          Defter is a digital notebook I built for one person who collects notes and quotes from the
+          books and magazines they read. The goal is simple: capture an underlined sentence quickly,
+          keep it tied to the exact book and page it came from, and find it again months later with a
+          single word.
+        </p>
+        <p class="detail-intro-text en-only">
+          Because the app serves a single owner, it is not public: it is hidden from search engines
+          and opens only on devices the owner has approved. So instead of a live link or source code,
+          I'm presenting it here with screenshots.
+        </p>
+
+        <div class="detail-ps-grid">
+          <div class="detail-ps-box">
+            <span class="detail-ps-label tr-only">// Problem</span>
+            <span class="detail-ps-label en-only">// The problem</span>
+            <p class="tr-only">Kitap okurken alınan notlar genellikle dağınık bir hâlde kalır: kitap kenarlarında, telefon notlarında, fotoğraflarda. Sonradan bir alıntıyı bulmak, kaynağını doğru göstermek ya da bir konudaki tüm notları bir araya getirmek zorlaşır. Hazır not uygulamaları ise genel amaçlıdır; "bu not hangi kitabın kaçıncı baskısından, hangi sayfadan" gibi bilgileri yapısal olarak tutmaz.</p>
+            <p class="en-only">Reading notes tend to end up scattered — in book margins, phone notes, photos. Finding a quote later, citing it correctly, or pulling together every note on a topic becomes hard. General-purpose note apps don't store structured information like "which edition of which book, which page".</p>
+          </div>
+          <div class="detail-ps-box">
+            <span class="detail-ps-label tr-only">// Çözüm</span>
+            <span class="detail-ps-label en-only">// The solution</span>
+            <p class="tr-only">Defter'de her not bir <strong>kaynağa</strong> (kitap veya dergi) ve bir veya birden fazla <strong>kategoriye</strong> bağlanır. Kaynaklar yazar, yayınevi, yıl, baskı ve basım yeri gibi künye bilgileriyle saklanır; böylece bir alıntı her zaman tam künyesiyle birlikte görünür. Arama, kategori ve kaynak sayfaları bu yapının üzerine kuruludur; tüm notlar istenildiği an Word belgesine dönüştürülebilir.</p>
+            <p class="en-only">In Defter, every note is linked to a <strong>source</strong> (a book or a magazine) and one or more <strong>categories</strong>. Sources store full bibliographic details — author, publisher, year, edition, place of publication — so a quote always appears with its complete citation. Search, category and source pages are built on this structure, and any set of notes can be exported to a Word document at any time.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ÖNE ÇIKAN ÖZELLİKLER -->
+    <section class="detail-section">
+      <div class="container">
+        <span class="detail-section-label"><span class="accent">02 //</span>
+          <span class="tr-only">Öne Çıkan Özellikler</span><span class="en-only">Key Features</span>
+        </span>
+
+        <div class="detail-feature-list">
+
+          <!-- 01 Arayüz -->
+          <div class="detail-feature">
+            <div class="detail-feature-head">
+              <span class="detail-feature-num">01</span>
+              <h3>
+                <span class="tr-only">Sade, okumaya odaklı arayüz</span>
+                <span class="en-only">A calm, reading-first interface</span>
+              </h3>
+            </div>
+            <p class="detail-feature-body tr-only">Monokrom, tipografi ağırlıklı bir tasarım. Ana sayfada arama kutusu, numaralandırılmış "Son eklenen notlar" listesi ve kapak görselleriyle "Son kaynaklar" yer alıyor. Üst bardaki <strong>№</strong> göstergesi toplam not sayısını gösteriyor — bir defterin sayfa numarası gibi.</p>
+            <p class="detail-feature-body en-only">A monochrome, typography-led design. The home page has a search bar, a numbered "Recently added notes" list and a "Recent sources" shelf with cover images. The <strong>№</strong> counter in the top bar shows the total number of notes — like the page number of a notebook.</p>
+            <div class="detail-screenshots">
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Son kaynaklar bölümü</span>
+                  <span class="en-only">Recent sources section</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/02-ana-sayfa-son-kaynaklar.jpg" alt="Son kaynaklar" loading="lazy" width="927" height="855">
+              </div>
+            </div>
+          </div>
+
+          <!-- 02 Notlar -->
+          <div class="detail-feature">
+            <div class="detail-feature-head">
+              <span class="detail-feature-num">02</span>
+              <h3>
+                <span class="tr-only">Notlar ve not detayı</span>
+                <span class="en-only">Notes and note view</span>
+              </h3>
+            </div>
+            <p class="detail-feature-body tr-only">Her not; kategorileri, eklenme tarihi ve içerikten oluşan bir satır olarak listeleniyor. Not açıldığında alıntı büyük puntoyla, altında kaynağın tam künyesiyle gösteriliyor. Not üzerinde <strong>Favori</strong>, <strong>Düzenle</strong>, <strong>Kopyala</strong> ve <strong>Sil</strong> işlemleri yapılabiliyor; kaynak satırı tıklanarak doğrudan kitabın sayfasına geçiliyor.</p>
+            <p class="detail-feature-body en-only">Each note is listed with its categories, date and content. Opening a note shows the quote in large type with its full citation underneath. Notes can be <strong>favourited</strong>, <strong>edited</strong>, <strong>copied</strong> or <strong>deleted</strong>, and the citation line links straight to the source's page.</p>
+            <div class="detail-screenshots">
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Tüm notlar listesi</span>
+                  <span class="en-only">All notes list</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/03-notlar.jpg" alt="Notlar listesi" loading="lazy" width="927" height="855">
+              </div>
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Not detayı ve künye</span>
+                  <span class="en-only">Note view with citation</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/04-not-detay.jpg" alt="Not detayı" loading="lazy" width="927" height="855">
+              </div>
+            </div>
+          </div>
+
+          <!-- 03 Kaynaklar -->
+          <div class="detail-feature">
+            <div class="detail-feature-head">
+              <span class="detail-feature-num">03</span>
+              <h3>
+                <span class="tr-only">Kitaplar ve dergiler</span>
+                <span class="en-only">Books and magazines</span>
+              </h3>
+            </div>
+            <p class="detail-feature-body tr-only">Kaynaklar kapak görselleriyle bir rafta duruyormuş gibi listeleniyor; <strong>Tümü / Kitaplar / Dergiler</strong> sekmeleriyle filtrelenebiliyor. Her kaynağın altında kaç not bağlı olduğu yazıyor. Kaynak sayfasında tam künye, bağlı notlar ve sayfa numarası veya eklenme tarihine göre sıralama seçenekleri var. O kitaba doğrudan not eklenebiliyor ya da tüm notlar tek tıkla Word'e aktarılabiliyor. Yeni kaynak formu türe göre değişiyor — kitap ve dergi için farklı zorunlu alanlar sunuyor.</p>
+            <p class="detail-feature-body en-only">Sources are shown with their covers like books on a shelf, filterable with <strong>All / Books / Magazines</strong> tabs, each showing how many notes are attached. A source page shows the full citation, all linked notes and sorting by <strong>page number</strong> or <strong>date added</strong>. Notes can be added directly to that book, and all of its notes can be <strong>exported to Word</strong> in one click. The new-source form adapts to the type — different required fields for books and magazines.</p>
+            <div class="detail-screenshots">
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Kitaplar ve dergiler rafı</span>
+                  <span class="en-only">Books & magazines shelf</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/05-kitaplar-ve-dergiler.jpg" alt="Kitaplar ve dergiler" loading="lazy" width="927" height="855">
+              </div>
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Kitap sayfası ve bağlı notlar</span>
+                  <span class="en-only">Book page with linked notes</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/06-kitap-detay.jpg" alt="Kitap detayı" loading="lazy" width="927" height="855">
+              </div>
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Yeni kitap/dergi formu</span>
+                  <span class="en-only">New book/magazine form</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/10-yeni-kaynak.jpg" alt="Yeni kaynak formu" loading="lazy" width="927" height="855">
+              </div>
+            </div>
+          </div>
+
+          <!-- 04 Kategoriler -->
+          <div class="detail-feature">
+            <div class="detail-feature-head">
+              <span class="detail-feature-num">04</span>
+              <h3>
+                <span class="tr-only">Kategoriler</span>
+                <span class="en-only">Categories</span>
+              </h3>
+            </div>
+            <p class="detail-feature-body tr-only">Notlar konu bazlı kategorilerle etiketleniyor. Kategoriler sayfasında yeni kategori eklenebiliyor, her kategorinin kaç not içerdiği görülüyor; kategoriler yeniden adlandırılabiliyor veya silinebiliyor. Bir not birden fazla kategoriye ait olabiliyor.</p>
+            <p class="detail-feature-body en-only">Notes are tagged by topic. The categories page lets you add categories, see how many notes each contains, and rename or delete them. A note can belong to several categories.</p>
+            <div class="detail-screenshots">
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Kategori yönetimi</span>
+                  <span class="en-only">Category management</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/07-kategoriler.jpg" alt="Kategoriler" loading="lazy" width="927" height="855">
+              </div>
+            </div>
+          </div>
+
+          <!-- 05 Arama -->
+          <div class="detail-feature">
+            <div class="detail-feature-head">
+              <span class="detail-feature-num">05</span>
+              <h3>
+                <span class="tr-only">Türkçe karakter duyarlı anlık arama</span>
+                <span class="en-only">Instant search with Turkish character support</span>
+              </h3>
+            </div>
+            <p class="detail-feature-body tr-only">Arama yazarken sonuç veriyor ve sonuçları üç grupta topluyor: <strong>Kitaplar ve dergiler</strong>, <strong>Kategoriler</strong> ve <strong>Notlar</strong>. Eşleşen kelimeler not metninde vurgulanıyor ve eşleşmenin geçtiği yerden bir kesit gösteriliyor. Türkçe karakterleri doğru ele alıyor — "islam" araması "İslam" ve "İslamcılık" geçen notları buluyor. Arama sonuçları da doğrudan Word'e aktarılabiliyor. Arama kutusu <kbd>/</kbd> veya <kbd>Ctrl+K</kbd> kısayoluyla her yerden açılıyor.</p>
+            <p class="detail-feature-body en-only">Search returns results as you type, grouped into <strong>Books & magazines</strong>, <strong>Categories</strong> and <strong>Notes</strong>. Matching words are highlighted in a snippet of the note. It handles Turkish characters correctly — searching "islam" finds notes containing "İslam" and "İslamcılık". Search results can be exported to Word directly, and the search box opens from anywhere with <kbd>/</kbd> or <kbd>Ctrl+K</kbd>.</p>
+            <div class="detail-screenshots">
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Gruplanmış anlık arama sonuçları</span>
+                  <span class="en-only">Grouped instant search results</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/08-arama.jpg" alt="Arama sonuçları" loading="lazy" width="927" height="855">
+              </div>
+            </div>
+          </div>
+
+          <!-- 06 Editör -->
+          <div class="detail-feature">
+            <div class="detail-feature-head">
+              <span class="detail-feature-num">06</span>
+              <h3>
+                <span class="tr-only">Zengin metin editörü</span>
+                <span class="en-only">Rich-text editor</span>
+              </h3>
+            </div>
+            <p class="detail-feature-body tr-only">Yeni not ekranında isteğe bağlı başlık, favori yıldızı ve bir biçimlendirme araç çubuğu var: kalın, italik, altı çizili, vurgu, H2/H3 başlıklar, madde ve numaralı liste, alıntı bloğu, geri al/yinele. Notun altında kategoriler eklenebiliyor ve kaynak, arama yapılarak mevcut kitap/dergiler arasından seçilebiliyor.</p>
+            <p class="detail-feature-body en-only">The new-note screen has an optional title, a favourite star and a formatting toolbar: bold, italic, underline, highlight, H2/H3 headings, bulleted and numbered lists, block quote, undo/redo. Categories can be added below the note, and the source is picked by searching existing books and magazines.</p>
+            <div class="detail-screenshots">
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Zengin metin editörüyle yeni not</span>
+                  <span class="en-only">New note with rich-text editor</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/09-yeni-not-editor.jpg" alt="Yeni not editörü" loading="lazy" width="927" height="855">
+              </div>
+            </div>
+          </div>
+
+          <!-- 07 Dışa aktarma -->
+          <div class="detail-feature">
+            <div class="detail-feature-head">
+              <span class="detail-feature-num">07</span>
+              <h3>
+                <span class="tr-only">Word'e dışa aktarma</span>
+                <span class="en-only">Export to Word</span>
+              </h3>
+            </div>
+            <p class="detail-feature-body tr-only">Notlar <strong>.docx</strong> olarak indirilebiliyor. Dışa aktarma kapsamı seçilebiliyor: <strong>tüm notlar</strong>, <strong>sadece favoriler</strong>, <strong>bir kategori</strong>, <strong>bir kitap / dergi</strong> veya <strong>arama sonuçları</strong>. Böylece belirli bir konudaki alıntılar, makale veya ödev için hazır bir belge olarak alınabiliyor.</p>
+            <p class="detail-feature-body en-only">Notes can be downloaded as <strong>.docx</strong>, scoped to <strong>all notes</strong>, <strong>favourites only</strong>, <strong>a category</strong>, <strong>a book / magazine</strong> or <strong>search results</strong> — so the quotes on a topic can be pulled into a ready-made document for an essay or paper.</p>
+            <div class="detail-screenshots">
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Word'e dışa aktarma seçenekleri</span>
+                  <span class="en-only">Word export options</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/13-disa-aktarma.jpg" alt="Dışa aktarma" loading="lazy" width="927" height="855">
+              </div>
+            </div>
+          </div>
+
+          <!-- 08 Tema + yazı boyutu -->
+          <div class="detail-feature">
+            <div class="detail-feature-head">
+              <span class="detail-feature-num">08</span>
+              <h3>
+                <span class="tr-only">Okuma konforu ayarları</span>
+                <span class="en-only">Reading comfort settings</span>
+              </h3>
+            </div>
+            <p class="detail-feature-body tr-only">Tema <strong>Sistem / Açık / Koyu</strong> olarak seçilebiliyor; yazı boyutu dört kademede (<strong>Normal, Büyük, Daha büyük, En büyük</strong>) ayarlanabiliyor. Uzun alıntıları rahat okumak için tasarlanmış bir ayar — tercihler cihazda saklanıyor.</p>
+            <p class="detail-feature-body en-only">Theme can be set to <strong>System / Light / Dark</strong>, and text size to four steps (<strong>Normal, Large, Larger, Largest</strong>) — designed for reading long quotes comfortably. Preferences are stored on the device.</p>
+            <div class="detail-screenshots">
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Tema ve yazı boyutu ayarları</span>
+                  <span class="en-only">Theme and text-size settings</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/11-ayarlar.jpg" alt="Ayarlar" loading="lazy" width="927" height="855">
+              </div>
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Açık tema: ana sayfa</span>
+                  <span class="en-only">Light theme: home</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/14-acik-tema-ana-sayfa.jpg" alt="Açık tema ana sayfa" loading="lazy" width="927" height="855">
+              </div>
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Açık tema: kitap sayfası</span>
+                  <span class="en-only">Light theme: book page</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/15-acik-tema-kitap-detay.jpg" alt="Açık tema kitap detayı" loading="lazy" width="927" height="855">
+              </div>
+            </div>
+          </div>
+
+          <!-- 09 Cihaz onayı -->
+          <div class="detail-feature">
+            <div class="detail-feature-head">
+              <span class="detail-feature-num">09</span>
+              <h3>
+                <span class="tr-only">Şifresiz cihaz onaylı erişim</span>
+                <span class="en-only">Passwordless device-approval access</span>
+              </h3>
+            </div>
+            <p class="detail-feature-body tr-only">Uygulamaya klasik bir kullanıcı adı/şifre ekranı yerine <strong>cihaz onayı</strong> ile erişiliyor. Yeni bir cihaz ilk girişte bir kodla doğrulanıyor; onaylanan cihaz güvenilir olarak işaretleniyor ve sonraki girişlerde tekrar kod istenmiyor. "Bağlı cihazlar" ekranında her cihazın türü, tarayıcısı, onay tarihi ve son görülme zamanı listeleniyor; cihazlar yeniden adlandırılabiliyor ya da bağlantısı kesilebiliyor.</p>
+            <p class="detail-feature-body en-only">Instead of a username/password screen, access works through <strong>device approval</strong>. A new device is verified with a code on first sign-in; once approved it is trusted and no code is needed next time. The "Connected devices" screen lists each device's type, browser, approval date and last-seen time, and devices can be renamed or disconnected.</p>
+            <div class="detail-screenshots">
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Onaylı cihaz yönetimi</span>
+                  <span class="en-only">Approved device management</span>
+                </div>
+                <img src="../../assets/defter/gorseller/masaustu/12-bagli-cihazlar.jpg" alt="Bağlı cihazlar" loading="lazy" width="927" height="855">
+              </div>
+            </div>
+          </div>
+
+          <!-- 10 Mobil + PWA -->
+          <div class="detail-feature">
+            <div class="detail-feature-head">
+              <span class="detail-feature-num">10</span>
+              <h3>
+                <span class="tr-only">Mobil deneyim ve PWA</span>
+                <span class="en-only">Mobile experience and PWA</span>
+              </h3>
+            </div>
+            <p class="detail-feature-body tr-only">Mobilde üst menü yerini başparmakla kolay erişilen bir <strong>alt gezinme çubuğuna</strong> bırakıyor: Ana sayfa, Ara, ortada büyük <strong>+</strong> (yeni not), Kitaplar ve Menü. Uygulama bir web manifest'iyle <strong>ana ekrana eklenebiliyor</strong> ve tarayıcı çubuğu olmadan, bağımsız bir uygulama gibi açılıyor. Okurken telefondan hızlıca not almak için tasarlandı.</p>
+            <p class="detail-feature-body en-only">On mobile, the top menu is replaced by a thumb-friendly <strong>bottom navigation bar</strong>: Home, Search, a large central <strong>+</strong> (new note), Books and Menu. With a web manifest, the app can be <strong>added to the home screen</strong> and opens standalone, without browser chrome — made for jotting down a note from a phone while reading.</p>
+            <div class="detail-mobile-ss-row">
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Mobil: ana sayfa</span>
+                  <span class="en-only">Mobile: home</span>
+                </div>
+                <img src="../../assets/defter/gorseller/mobil/16-mobil-ana-sayfa.jpg" alt="Mobil ana sayfa" loading="lazy" width="390" height="855">
+              </div>
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Mobil: kitaplar</span>
+                  <span class="en-only">Mobile: books</span>
+                </div>
+                <img src="../../assets/defter/gorseller/mobil/17-mobil-kitaplar.jpg" alt="Mobil kitaplar" loading="lazy" width="390" height="855">
+              </div>
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Mobil: not detayı</span>
+                  <span class="en-only">Mobile: note view</span>
+                </div>
+                <img src="../../assets/defter/gorseller/mobil/18-mobil-not-detay.jpg" alt="Mobil not detayı" loading="lazy" width="390" height="855">
+              </div>
+              <div class="detail-ss">
+                <div class="detail-ss-bar">
+                  <span class="tr-only">Mobil: yeni not</span>
+                  <span class="en-only">Mobile: new note</span>
+                </div>
+                <img src="../../assets/defter/gorseller/mobil/19-mobil-yeni-not.jpg" alt="Mobil yeni not" loading="lazy" width="390" height="855">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TEKNİK NOTLAR -->
+    <section class="detail-section">
+      <div class="container">
+        <span class="detail-section-label"><span class="accent">03 //</span>
+          <span class="tr-only">Teknik Notlar</span><span class="en-only">Technical Notes</span>
+        </span>
+
+        <ul class="detail-tech-list">
+          <li class="detail-tech-item">
+            <span class="detail-tech-tag">Next.js + React</span>
+            <span class="detail-tech-desc tr-only">Turbopack ile derleniyor; sayfalar arası geçişler istemci tarafında, yeniden yükleme olmadan gerçekleşiyor.</span>
+            <span class="detail-tech-desc en-only">Built with Turbopack; navigation between pages happens client-side without full reloads.</span>
+          </li>
+          <li class="detail-tech-item">
+            <span class="detail-tech-tag">Vercel</span>
+            <span class="detail-tech-desc tr-only">Yayına alma ve barındırma Vercel üzerinde.</span>
+            <span class="detail-tech-desc en-only">Hosting and deployment on Vercel.</span>
+          </li>
+          <li class="detail-tech-item">
+            <span class="detail-tech-tag">PWA</span>
+            <span class="detail-tech-desc tr-only">Web manifest ile kurulabilir; <code>standalone</code> modda açılıyor.</span>
+            <span class="detail-tech-desc en-only">Installable via web manifest; opens in <code>standalone</code> mode.</span>
+          </li>
+          <li class="detail-tech-item">
+            <span class="detail-tech-tag tr-only">Gizlilik</span>
+            <span class="detail-tech-tag en-only">Privacy</span>
+            <span class="detail-tech-desc tr-only">Site <code>noindex, nofollow, noarchive, nosnippet, noimageindex</code> başlıklarıyla arama motorlarına tamamen kapalı; içerik yalnızca onaylı cihazlarda görüntüleniyor.</span>
+            <span class="detail-tech-desc en-only">Fully excluded from search engines (<code>noindex, nofollow, noarchive, nosnippet, noimageindex</code>); content is visible only on approved devices.</span>
+          </li>
+          <li class="detail-tech-item">
+            <span class="detail-tech-tag tr-only">Kalıcı ID'ler</span>
+            <span class="detail-tech-tag en-only">Stable IDs</span>
+            <span class="detail-tech-desc tr-only">Not ve kaynak adresleri sıralanabilir, benzersiz kimliklerle (ULID biçiminde) oluşturuluyor.</span>
+            <span class="detail-tech-desc en-only">Note and source URLs use sortable unique IDs (ULID format).</span>
+          </li>
+          <li class="detail-tech-item">
+            <span class="detail-tech-tag tr-only">Tipografi</span>
+            <span class="detail-tech-tag en-only">Typography</span>
+            <span class="detail-tech-desc tr-only">Inter; monokrom renk paleti ve geniş satır aralıklarıyla okumaya odaklı düzen.</span>
+            <span class="detail-tech-desc en-only">Inter; a monochrome palette and generous line spacing for a reading-focused layout.</span>
+          </li>
+          <li class="detail-tech-item">
+            <span class="detail-tech-tag tr-only">Erişilebilirlik</span>
+            <span class="detail-tech-tag en-only">Accessibility</span>
+            <span class="detail-tech-desc tr-only">Editör düğmelerinde açıklayıcı etiketler; arama için <kbd>/</kbd> ve <kbd>Ctrl+K</kbd> kısayolları.</span>
+            <span class="detail-tech-desc en-only">Descriptive labels on editor buttons; <kbd>/</kbd> and <kbd>Ctrl+K</kbd> shortcuts for search.</span>
+          </li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- NEDEN DEMO YOK -->
+    <section class="detail-section">
+      <div class="container">
+        <span class="detail-section-label"><span class="accent">04 //</span>
+          <span class="tr-only">Neden canlı demo veya kaynak kod yok?</span>
+          <span class="en-only">Why no live demo or source code?</span>
+        </span>
+
+        <div class="detail-note-box">
+          <p class="tr-only">Defter tek bir kişinin gerçek okuma notlarını tutan, aktif kullanımdaki özel bir uygulama. İçerik kişisel olduğu için site herkese kapalı ve kaynak kodu paylaşılmıyor. Bu sayfadaki görüntüler uygulamanın gerçek hâlinden alındı.</p>
+          <p class="en-only">Defter is a private app in active use, holding one person's real reading notes. The content is personal, so the site is closed to the public and the code isn't shared. The screenshots on this page are taken from the real app.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year">2026</span> Mahmut Burhan Karataş</p>
+      <p class="footer-note" data-i18n="footer.note">Vanilla HTML · CSS · JavaScript ile yapıldı.</p>
+      <p class="footer-path">projeler/defter</p>
+    </div>
+  </footer>
+
+  <script src="../../script.js"></script>
+</body>
+</html>

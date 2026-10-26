@@ -49,6 +49,11 @@ const I18N = {
     "projects.visit": "Siteyi Aç",
     "projects.opensource": "Açık Kaynak",
     "projects.github": "Kodu Gör",
+    "projects.private": "Özel",
+    "projects.details": "Ayrıntıları Gör",
+    "projects.p7.desc":
+      "Kişiye özel geliştirdiğim bir okuma notu ve alıntı arşivi. Kitap ve dergilerden alınan notlar kategorilere ve kaynaklarına bağlanıyor; Türkçe karakter duyarlı anlık arama, zengin metin editörü ve Word'e dışa aktarma içeriyor. Yalnızca onaylı cihazlardan erişilebilen, mobilde uygulama gibi çalışan bir PWA.",
+    "detail.back": "← Projeler",
     "projects.p1.desc":
       "Bağımsız bir dijital edebiyat ve felsefe dergisi. Yazılar, sayılar, yazar profilleri ve editör paneliyle uçtan uca çalışan, monokrom bir yayın estetiğine sahip yayın platformu.",
     "projects.p2.desc":
@@ -125,6 +130,11 @@ const I18N = {
     "projects.visit": "Visit Site",
     "projects.opensource": "Open Source",
     "projects.github": "View Code",
+    "projects.private": "Private",
+    "projects.details": "View Details",
+    "projects.p7.desc":
+      "A private reading-notes and quote archive I built for one person. Notes from books and magazines are linked to categories and sources, with Turkish-aware instant search, a rich-text editor and Word export. Accessible only from approved devices, and installable as an app on mobile (PWA).",
+    "detail.back": "← Projects",
     "projects.p1.desc":
       "An independent digital literature and philosophy magazine. An end-to-end publishing platform with articles, issues, author profiles and an editor panel, with a monochrome publication aesthetic.",
     "projects.p2.desc":
@@ -181,13 +191,14 @@ function applyLanguage(lang) {
   });
 
   const meta = HTML_META[lang] || HTML_META.tr;
-  document.title = meta.title;
 
-  const desc = document.querySelector('meta[name="description"]');
-  if (desc) desc.setAttribute("content", meta.description);
-
-  const ogLocale = document.querySelector('meta[property="og:locale"]');
-  if (ogLocale) ogLocale.setAttribute("content", meta.ogLocale);
+  if (window.location.pathname === "/" || window.location.pathname === "") {
+    document.title = meta.title;
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.setAttribute("content", meta.description);
+    const ogLocale = document.querySelector('meta[property="og:locale"]');
+    if (ogLocale) ogLocale.setAttribute("content", meta.ogLocale);
+  }
 
   document.querySelectorAll(".lang-switch button").forEach((btn) => {
     btn.classList.toggle("is-active", btn.dataset.lang === lang);
