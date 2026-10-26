@@ -50,7 +50,7 @@ const I18N = {
     "projects.opensource": "Açık Kaynak",
     "projects.github": "Kodu Gör",
     "projects.private": "Özel",
-    "projects.details": "Ayrıntıları Gör",
+    "projects.details": "Ayrıntılar",
     "projects.p7.desc":
       "Kişiye özel geliştirdiğim bir okuma notu ve alıntı arşivi. Kitap ve dergilerden alınan notlar kategorilere ve kaynaklarına bağlanıyor; Türkçe karakter duyarlı anlık arama, zengin metin editörü ve Word'e dışa aktarma içeriyor. Yalnızca onaylı cihazlardan erişilebilen, mobilde uygulama gibi çalışan bir PWA.",
     "detail.back": "← Projeler",
@@ -131,7 +131,7 @@ const I18N = {
     "projects.opensource": "Open Source",
     "projects.github": "View Code",
     "projects.private": "Private",
-    "projects.details": "View Details",
+    "projects.details": "Details",
     "projects.p7.desc":
       "A private reading-notes and quote archive I built for one person. Notes from books and magazines are linked to categories and sources, with Turkish-aware instant search, a rich-text editor and Word export. Accessible only from approved devices, and installable as an app on mobile (PWA).",
     "detail.back": "← Projects",
