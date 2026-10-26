@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>İçerikler — Panel · bkaratas.dev</title>
+  <meta name="description" content="bkaratas.dev yönetim paneli — site içerikleri.">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0a0b">
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/panel/panel.css">
+</head>
+<body>
+
+  <div class="panel-shell">
+
+    <aside class="panel-sidebar">
+      <a class="side-brand" href="/panel/dashboard">
+        <span class="slash">//</span><span>bkaratas.dev</span>
+        <span class="tag">panel</span>
+      </a>
+
+      <nav class="side-nav" aria-label="Panel">
+        <a href="/panel/dashboard"><i>01</i><span>Genel Bakış</span></a>
+        <a href="/panel/dashboard/yazilar/"><i>02</i><span>Yazılar</span></a>
+        <a class="is-active" href="/panel/dashboard/icerikler/"><i>03</i><span>İçerikler</span></a>
+        <a href="/panel/dashboard/ayarlar/"><i>04</i><span>Ayarlar</span></a>
+      </nav>
+
+      <div class="side-foot">
+        <span>v0.3.0 · içerik yönetimi</span>
+      </div>
+    </aside>
+
+    <div class="panel-main-col">
+
+      <header class="panel-topbar">
+        <span class="topbar-title">içerikler</span>
+        <span class="topbar-spacer"></span>
+        <span class="user-chip"><span class="dot" aria-hidden="true"></span><span id="panel-user">admin</span></span>
+        <button id="logout" class="panel-btn" type="button">Çıkış</button>
+      </header>
+
+      <main class="panel-content">
+
+        <div class="panel-head-row">
+          <div class="panel-head" style="margin-bottom:0">
+            <h1>İçerikler</h1>
+            <p>Ana sayfadaki metinleri, yetenekler listesini ve sosyal linkleri buradan güncelle.</p>
+          </div>
+          <div class="panel-head-actions">
+            <button class="btn btn-primary" id="save-btn" type="button">Kaydet</button>
+          </div>
+        </div>
+
+        <div class="flash" id="flash" role="status" aria-live="polite"></div>
+
+        <div id="content-form">
+
+          <!-- TR METİNLER -->
+          <div class="card" style="margin-top:24px">
+            <div class="card-bar">
+              <span class="card-name">metinler_TR.md</span>
+              <span>Türkçe</span>
+            </div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:20px">
+              <div class="editor-field">
+                <label class="editor-label" for="tr-tagline">Hero tagline</label>
+                <textarea class="editor-textarea" id="tr-tagline" rows="3" placeholder="Ana sayfadaki kısa slogan (TR)"></textarea>
+              </div>
+              <div class="editor-field">
+                <label class="editor-label" for="tr-about-p1">Hakkımda — 1. paragraf</label>
+                <textarea class="editor-textarea" id="tr-about-p1" rows="3" placeholder="Hakkımda bölümündeki ilk paragraf (TR)"></textarea>
+              </div>
+              <div class="editor-field" style="margin-bottom:0">
+                <label class="editor-label" for="tr-about-p2">Hakkımda — 2. paragraf</label>
+                <textarea class="editor-textarea" id="tr-about-p2" rows="3" placeholder="Hakkımda bölümündeki ikinci paragraf (TR)"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- EN METİNLER -->
+          <div class="card" style="margin-top:16px">
+            <div class="card-bar">
+              <span class="card-name">metinler_EN.md</span>
+              <span>English</span>
+            </div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:20px">
+              <div class="editor-field">
+                <label class="editor-label" for="en-tagline">Hero tagline</label>
+                <textarea class="editor-textarea" id="en-tagline" rows="3" placeholder="Hero tagline (EN)"></textarea>
+              </div>
+              <div class="editor-field">
+                <label class="editor-label" for="en-about-p1">About — paragraph 1</label>
+                <textarea class="editor-textarea" id="en-about-p1" rows="3" placeholder="About section, first paragraph (EN)"></textarea>
+              </div>
+              <div class="editor-field" style="margin-bottom:0">
+                <label class="editor-label" for="en-about-p2">About — paragraph 2</label>
+                <textarea class="editor-textarea" id="en-about-p2" rows="3" placeholder="About section, second paragraph (EN)"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- YETENEKLER -->
+          <div class="card" style="margin-top:16px">
+            <div class="card-bar">
+              <span class="card-name">yetenekler.json</span>
+              <span>Skills</span>
+            </div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:20px">
+              <p class="editor-hint" style="margin:0 0 4px">Her grup için virgülle ayrılmış liste. Örn: <code>Python, Flask, REST API</code></p>
+              <div class="editor-field">
+                <label class="editor-label" for="skills-web">Diller &amp; Web</label>
+                <input class="editor-input" id="skills-web" type="text" placeholder="HTML5, CSS3, JavaScript, React, Next.js ...">
+              </div>
+              <div class="editor-field">
+                <label class="editor-label" for="skills-backend">Arka Uç</label>
+                <input class="editor-input" id="skills-backend" type="text" placeholder="Python, Flask, REST API ...">
+              </div>
+              <div class="editor-field">
+                <label class="editor-label" for="skills-db">Veritabanı</label>
+                <input class="editor-input" id="skills-db" type="text" placeholder="MySQL, SQLite ...">
+              </div>
+              <div class="editor-field" style="margin-bottom:0">
+                <label class="editor-label" for="skills-tools">Araçlar &amp; Platform</label>
+                <input class="editor-input" id="skills-tools" type="text" placeholder="Git / GitHub, Vercel, Cloudflare ...">
+              </div>
+            </div>
+          </div>
+
+          <!-- SOSYAL LİNKLER -->
+          <div class="card" style="margin-top:16px;margin-bottom:32px">
+            <div class="card-bar">
+              <span class="card-name">sosyal.json</span>
+              <span>Sosyal &amp; İletişim</span>
+            </div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:20px">
+              <div class="editor-field">
+                <label class="editor-label" for="social-email">E-posta</label>
+                <input class="editor-input" id="social-email" type="email" placeholder="ornek@eposta.com">
+              </div>
+              <div class="editor-field">
+                <label class="editor-label" for="social-github">GitHub URL</label>
+                <input class="editor-input" id="social-github" type="url" placeholder="https://github.com/kullanici">
+              </div>
+              <div class="editor-field">
+                <label class="editor-label" for="social-instagram">Instagram URL</label>
+                <input class="editor-input" id="social-instagram" type="url" placeholder="https://www.instagram.com/kullanici/">
+              </div>
+              <div class="editor-field">
+                <label class="editor-label" for="social-medium">Medium URL</label>
+                <input class="editor-input" id="social-medium" type="url" placeholder="https://medium.com/@kullanici">
+              </div>
+              <div class="editor-field" style="margin-bottom:0">
+                <label class="editor-label" for="social-linkedin">LinkedIn URL</label>
+                <input class="editor-input" id="social-linkedin" type="url" placeholder="https://www.linkedin.com/in/kullanici/">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="/panel/dashboard/icerikler/icerikler.js"></script>
+</body>
+</html>

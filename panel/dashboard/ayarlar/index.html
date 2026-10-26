@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ayarlar — Panel · bkaratas.dev</title>
+  <meta name="description" content="bkaratas.dev yönetim paneli — ayarlar.">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0a0b">
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/panel/panel.css">
+</head>
+<body>
+
+  <div class="panel-shell">
+
+    <aside class="panel-sidebar">
+      <a class="side-brand" href="/panel/dashboard">
+        <span class="slash">//</span><span>bkaratas.dev</span>
+        <span class="tag">panel</span>
+      </a>
+
+      <nav class="side-nav" aria-label="Panel">
+        <a href="/panel/dashboard"><i>01</i><span>Genel Bakış</span></a>
+        <a href="/panel/dashboard/yazilar/"><i>02</i><span>Yazılar</span></a>
+        <a href="/panel/dashboard/icerikler/"><i>03</i><span>İçerikler</span></a>
+        <a class="is-active" href="/panel/dashboard/ayarlar/"><i>04</i><span>Ayarlar</span></a>
+      </nav>
+
+      <div class="side-foot">
+        <span>v0.3.0 · içerik yönetimi</span>
+      </div>
+    </aside>
+
+    <div class="panel-main-col">
+
+      <header class="panel-topbar">
+        <span class="topbar-title">ayarlar</span>
+        <span class="topbar-spacer"></span>
+        <span class="user-chip"><span class="dot" aria-hidden="true"></span><span id="panel-user">admin</span></span>
+        <button id="logout" class="panel-btn" type="button">Çıkış</button>
+      </header>
+
+      <main class="panel-content">
+
+        <div class="panel-head">
+          <h1>Ayarlar</h1>
+          <p>Oturum bilgisi ve parola yönetimi.</p>
+        </div>
+
+        <div class="flash" id="flash" role="status" aria-live="polite"></div>
+
+        <div class="panel-cols">
+
+          <!-- OTURUM BİLGİSİ -->
+          <section class="card">
+            <div class="card-bar">
+              <span class="card-name">oturum.json</span>
+              <span>session</span>
+            </div>
+            <div class="card-body">
+              <ul class="roadmap">
+                <li>
+                  <span class="rm-mark is-done">[✓]</span>
+                  <span>Oturum <strong>aktif</strong></span>
+                </li>
+                <li>
+                  <span class="rm-mark is-done">[✓]</span>
+                  <span>Kullanıcı: <code id="session-user">—</code></span>
+                </li>
+                <li>
+                  <span class="rm-mark is-done">[✓]</span>
+                  <span>Süre: <span id="session-ttl">—</span></span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- HIZLI İŞLEMLER -->
+          <section class="card">
+            <div class="card-bar">
+              <span class="card-name">hizli_islemler.sh</span>
+              <span>actions</span>
+            </div>
+            <div class="card-body">
+              <p><a class="panel-note" href="/panel/dashboard/icerikler/">içerikleri düzenle →</a></p>
+              <p style="margin-top:12px"><a class="panel-note" href="/panel/dashboard/yazilar/">yazıları yönet →</a></p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- PAROLA DEĞİŞTİR -->
+        <section class="card" style="margin-top:16px">
+          <div class="card-bar">
+            <span class="card-name">parola_degistir.sh</span>
+            <span>change password</span>
+          </div>
+          <div class="card-body">
+            <p style="color:var(--muted);font-size:14.5px;margin:0 0 20px">
+              Yeni parolanı gir, hash üret, çıkan değeri Vercel ortam değişkenlerine ekle.
+            </p>
+
+            <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
+              <div class="editor-field" style="flex:1;min-width:220px;margin-bottom:0">
+                <label class="editor-label" for="new-password">Yeni parola</label>
+                <input class="editor-input" id="new-password" type="password" placeholder="En az 8 karakter" autocomplete="new-password">
+              </div>
+              <button class="btn btn-primary" id="hash-btn" type="button" style="flex-shrink:0">Hash Üret</button>
+            </div>
+
+            <div id="hash-result" hidden style="margin-top:16px">
+              <label class="editor-label">PANEL_PASSWORD_HASH değeri</label>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                <code id="hash-value" style="font-family:var(--mono);font-size:11px;color:var(--accent);word-break:break-all;flex:1;background:var(--bg);padding:10px 12px;border:1px solid var(--line-2)"></code>
+                <button class="btn btn-sm" id="copy-btn" type="button" style="flex-shrink:0">Kopyala</button>
+              </div>
+              <div class="notice" style="margin-top:12px">
+                <span class="notice-key">nasıl?</span>
+                <p>Vercel Dashboard → Project → Settings → Environment Variables →
+                  <code>PANEL_PASSWORD_HASH</code> değerini bu hash ile güncelle ve yeniden deploy et.
+                  Veya terminalde: <code>vercel env add PANEL_PASSWORD_HASH</code></p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="/panel/dashboard/ayarlar/ayarlar.js"></script>
+</body>
+</html>

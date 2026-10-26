@@ -394,12 +394,70 @@ async function initBlog() {
   if (navContactNum) navContactNum.textContent = "05";
 }
 
+async function loadSiteContent() {
+  try {
+    const res = await fetch("/api/site-content", { headers: { Accept: "application/json" } });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data || !data.ok || !data.content) return;
+    const { tr, en, skills, social } = data.content;
+
+    if (tr) {
+      if (tr.hero_tagline) I18N.tr["hero.tagline"] = tr.hero_tagline;
+      if (tr.about_p1) I18N.tr["about.p1"] = tr.about_p1;
+      if (tr.about_p2) I18N.tr["about.p2"] = tr.about_p2;
+    }
+    if (en) {
+      if (en.hero_tagline) I18N.en["hero.tagline"] = en.hero_tagline;
+      if (en.about_p1) I18N.en["about.p1"] = en.about_p1;
+      if (en.about_p2) I18N.en["about.p2"] = en.about_p2;
+    }
+
+    applyLanguage(document.documentElement.lang || "tr");
+
+    if (skills) {
+      const groups = { web: skills.web, backend: skills.backend, db: skills.db, tools: skills.tools };
+      for (const [key, items] of Object.entries(groups)) {
+        if (!Array.isArray(items) || !items.length) continue;
+        const ul = document.getElementById("skills-" + key);
+        if (!ul) continue;
+        ul.innerHTML = "";
+        items.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          ul.appendChild(li);
+        });
+      }
+    }
+
+    if (social) {
+      const map = {
+        "social-email":     { href: social.email ? `mailto:${social.email}` : null, text: social.email },
+        "social-github":    { href: social.github,    text: social.github?.replace("https://", "") },
+        "social-instagram": { href: social.instagram, text: social.instagram?.replace("https://www.", "").replace("https://", "") },
+        "social-medium":    { href: social.medium,    text: social.medium?.replace("https://", "") },
+        "social-linkedin":  { href: social.linkedin,  text: social.linkedin?.replace("https://www.linkedin.com/in/", "in/").replace("https://", "") },
+      };
+      for (const [id, { href, text }] of Object.entries(map)) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (href) el.href = href;
+        const valEl = el.querySelector(".env-val");
+        if (valEl && text) valEl.textContent = text;
+      }
+    }
+  } catch (_) {
+    /* sessizce başarısız ol — HTML'deki varsayılanlar gösterilir */
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initLanguage();
   initMobileNav();
   initReveal();
   initScrollProgress();
   initBlog();
+  loadSiteContent();
 
   const year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
