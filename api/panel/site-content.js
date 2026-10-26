@@ -1,23 +1,26 @@
-// GET/POST /api/panel/site-content — site içeriklerini okur/yazar (oturum korumalı).
+// GET /api/panel/site-content — herkese açık (public GET), korumalı yazma (POST).
 // GitHub content repo'sundaki site.json dosyasını yönetir.
 import { json } from "../_lib/http.js";
 import { requireSession } from "../_lib/guard.js";
 import { githubConfigured, getFile, putTextFile } from "../_lib/github.js";
 
+const CACHE = "public, s-maxage=60, stale-while-revalidate=300";
+const EMPTY = { tr: {}, en: {}, skills: {}, social: {} };
+
 export default {
   async fetch(request) {
-    const { response } = requireSession(request);
-    if (response) return response;
-
     if (request.method === "GET") {
       try {
         const file = await getFile("site.json");
-        if (!file) return json({ ok: true, content: null });
-        return json({ ok: true, content: JSON.parse(file.content) });
-      } catch (err) {
-        return json({ ok: false, error: "read_error", message: String(err.message || "") }, 502);
+        if (!file) return json({ ok: true, content: EMPTY }, 200, { "Cache-Control": CACHE });
+        return json({ ok: true, content: JSON.parse(file.content) }, 200, { "Cache-Control": CACHE });
+      } catch {
+        return json({ ok: true, content: EMPTY }, 200, { "Cache-Control": CACHE });
       }
     }
+
+    const { response } = requireSession(request);
+    if (response) return response;
 
     if (request.method === "POST") {
       if (!githubConfigured()) {

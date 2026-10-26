@@ -396,7 +396,7 @@ async function initBlog() {
 
 async function loadSiteContent() {
   try {
-    const res = await fetch("/api/site-content", { headers: { Accept: "application/json" } });
+    const res = await fetch("/api/panel/site-content", { headers: { Accept: "application/json" } });
     if (!res.ok) return;
     const data = await res.json();
     if (!data || !data.ok || !data.content) return;
