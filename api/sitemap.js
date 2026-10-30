@@ -4,6 +4,11 @@ import { listPublished } from "./_lib/content.js";
 
 const SITE = "https://bkaratas.dev";
 
+// Statik proje ayrıntı sayfaları. Yeni bir proje sayfası eklendiğinde buraya yazın.
+const PROJECT_PAGES = [
+  { path: "/projeler/defter", lastmod: "2026-10-27", priority: "0.8" },
+];
+
 function xmlEscape(value) {
   return String(value == null ? "" : value)
     .replace(/&/g, "&amp;")
@@ -37,6 +42,9 @@ export default {
 
     const entries = [
       urlEntry(`${SITE}/`, null, "monthly", "1.0"),
+      ...PROJECT_PAGES.map((page) =>
+        urlEntry(`${SITE}${page.path}`, page.lastmod, "monthly", page.priority)
+      ),
       urlEntry(`${SITE}/blog`, null, "weekly", "0.7"),
       ...posts.map((p) =>
         urlEntry(`${SITE}/blog/${p.slug}`, (p.updatedAt || p.date || "").slice(0, 10), "monthly", "0.6")

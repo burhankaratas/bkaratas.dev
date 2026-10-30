@@ -69,7 +69,7 @@ Alan adı **name.com** üzerinden alındı ve Vercel'in nameserver'larına yönl
 
 - **Open Graph / Twitter meta:** `index.html` `<head>` — WhatsApp, Instagram, Facebook, X, Telegram, Slack önizlemeleri için.
 - **JSON-LD (`@graph`):** `Person`, `WebSite`, `ProfilePage` ve projeler (`ItemList`) — arama motorlarına "kim" olduğunu ve projelerle ilişkisini bildirir.
-- **`robots.txt` + `/sitemap.xml`:** tarama ve site haritası. Site haritası dinamik üretilir (`api/sitemap.js`) ve ana sayfa, `/blog` ile tüm yayımlanmış yazıları listeler.
+- **`robots.txt` + `/sitemap.xml`:** tarama ve site haritası. Site haritası dinamik üretilir (`api/sitemap.js`) ve ana sayfa, proje ayrıntı sayfaları (`/projeler/defter`), `/blog` ile tüm yayımlanmış yazıları listeler.
 - **OG görselini yenileme** (tasarımı değiştirdiyseniz):
 
   ```bash
