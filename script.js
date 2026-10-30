@@ -364,6 +364,8 @@ async function initBlog() {
   const section = document.getElementById("blog");
   const list = document.getElementById("home-blog-list");
   const navBlog = document.getElementById("nav-blog");
+  const skillsNum = document.getElementById("skills-sec-num");
+  const navSkillsNum = document.getElementById("nav-skills-num");
   const contactNum = document.getElementById("contact-sec-num");
   const navContactNum = document.getElementById("nav-contact-num");
   if (!section || !list) return;
@@ -382,6 +384,8 @@ async function initBlog() {
     // Yayımlanmış yazı yok → bölüm ve menü bağlantısı gizli kalır.
     section.hidden = true;
     if (navBlog) navBlog.hidden = true;
+    if (skillsNum) skillsNum.textContent = "03";
+    if (navSkillsNum) navSkillsNum.textContent = "03";
     if (contactNum) contactNum.textContent = "04";
     if (navContactNum) navContactNum.textContent = "04";
     return;
@@ -390,6 +394,8 @@ async function initBlog() {
   renderBlogCards();
   section.hidden = false;
   if (navBlog) navBlog.hidden = false;
+  if (skillsNum) skillsNum.textContent = "04";
+  if (navSkillsNum) navSkillsNum.textContent = "04";
   if (contactNum) contactNum.textContent = "05";
   if (navContactNum) navContactNum.textContent = "05";
 }

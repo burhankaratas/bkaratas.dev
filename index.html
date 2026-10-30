@@ -222,10 +222,10 @@
       </a>
 
       <nav id="site-nav" class="site-nav">
-        <a href="#hakkimda"><i>01</i><span data-i18n="nav.about">Hakkımda</span></a>
-        <a href="#yetenekler"><i>02</i><span data-i18n="nav.skills">Yetenekler</span></a>
-        <a href="#projeler"><i>03</i><span data-i18n="nav.projects">Projeler</span></a>
-        <a href="#blog" id="nav-blog" hidden><i>04</i><span data-i18n="nav.blog">Blog</span></a>
+        <a href="#projeler"><i>01</i><span data-i18n="nav.projects">Projeler</span></a>
+        <a href="#hakkimda"><i>02</i><span data-i18n="nav.about">Hakkımda</span></a>
+        <a href="#blog" id="nav-blog" hidden><i>03</i><span data-i18n="nav.blog">Blog</span></a>
+        <a href="#yetenekler"><i id="nav-skills-num">04</i><span data-i18n="nav.skills">Yetenekler</span></a>
         <a href="#iletisim" id="nav-contact"><i id="nav-contact-num">05</i><span data-i18n="nav.contact">İletişim</span></a>
       </nav>
 
@@ -297,109 +297,11 @@
       </div>
     </section>
 
-    <!-- HAKKIMDA -->
-    <section id="hakkimda" class="section">
-      <div class="container">
-        <div class="section-label reveal">
-          <span class="sec-num">01</span>
-          <span data-i18n="about.label">Hakkımda</span>
-          <span class="sec-rule"></span>
-        </div>
-
-        <div class="about-grid">
-          <div class="panel reveal">
-            <div class="panel-bar">
-              <span class="panel-name">about.md</span>
-              <span class="panel-meta">UTF-8 · LF</span>
-            </div>
-            <div class="panel-body">
-              <h2 data-i18n="about.title">Kısaca ben</h2>
-              <p data-i18n="about.p1">
-                Merhaba, ben Burhan. Backend tarafında Python ve Flask ile ölçeklenebilir sistemler
-                kurmayı; arayüz tarafında ise sade, hızlı ve erişilebilir web deneyimleri geliştirmeyi
-                seviyorum.
-              </p>
-              <p data-i18n="about.p2">
-                Sehven Dergi ve Hesaplarız.org gibi projelerimi uçtan uca tasarlayıp hayata
-                geçiriyorum: fikirden arayüze, veritabanından yayına kadar her aşamasında çalışıyorum.
-              </p>
-            </div>
-          </div>
-
-          <ul class="facts reveal">
-            <li>
-              <span class="fact-key" data-i18n="about.factLocation">Konum</span>
-              <span class="fact-value">Atakum, Samsun</span>
-            </li>
-            <li>
-              <span class="fact-key" data-i18n="about.factFocus">Odak</span>
-              <span class="fact-value" data-i18n="about.factFocusValue">Backend &amp; ürün geliştirme</span>
-            </li>
-            <li>
-              <span class="fact-key" data-i18n="about.factStatus">Durum</span>
-              <span class="fact-value" data-i18n="about.factStatusValue">Yeni fırsatlara açık</span>
-            </li>
-            <li>
-              <span class="fact-key">GitHub</span>
-              <span class="fact-value">@burhankaratas</span>
-            </li>
-            <li>
-              <span class="fact-key">Aka</span>
-              <span class="fact-value">Burhan Karataş · MBK</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- YETENEKLER -->
-    <section id="yetenekler" class="section section-alt">
-      <div class="container">
-        <div class="section-label reveal">
-          <span class="sec-num">02</span>
-          <span data-i18n="skills.label">Yetenekler</span>
-          <span class="sec-rule"></span>
-        </div>
-
-        <h2 class="reveal" data-i18n="skills.title">Kullandığım teknolojiler</h2>
-        <p class="section-intro reveal" data-i18n="skills.intro">
-          Projelerimde düzenli olarak kullandığım diller, kütüphaneler ve araçlar.
-        </p>
-
-        <div class="skill-table reveal">
-          <div class="skill-row">
-            <span class="skill-key" data-i18n="skills.g1">Diller &amp; Web</span>
-            <ul class="chips" id="skills-web">
-              <li>HTML5</li><li>CSS3</li><li>JavaScript</li><li>React</li><li>Next.js</li><li>Node.js</li><li>Electron</li><li>Bootstrap</li>
-            </ul>
-          </div>
-          <div class="skill-row">
-            <span class="skill-key" data-i18n="skills.g2">Arka Uç</span>
-            <ul class="chips" id="skills-backend">
-              <li>Python</li><li>Flask</li><li>REST API</li><li>JWT</li><li>Jinja2</li><li>Flask-Mail</li><li>python-dotenv</li><li>Requests</li>
-            </ul>
-          </div>
-          <div class="skill-row">
-            <span class="skill-key" data-i18n="skills.g3">Veritabanı</span>
-            <ul class="chips" id="skills-db">
-              <li>MySQL</li><li>SQLite</li>
-            </ul>
-          </div>
-          <div class="skill-row">
-            <span class="skill-key" data-i18n="skills.g4">Araçlar &amp; Platform</span>
-            <ul class="chips" id="skills-tools">
-              <li>Git / GitHub</li><li>Vercel</li><li>Cloudflare</li><li>Figma</li><li>Vite</li><li>Linux</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- PROJELER -->
     <section id="projeler" class="section">
       <div class="container">
         <div class="section-label reveal">
-          <span class="sec-num">03</span>
+          <span class="sec-num">01</span>
           <span data-i18n="projects.label">Projeler</span>
           <span class="sec-rule"></span>
         </div>
@@ -603,11 +505,66 @@
       </div>
     </section>
 
+    <!-- HAKKIMDA -->
+    <section id="hakkimda" class="section section-alt">
+      <div class="container">
+        <div class="section-label reveal">
+          <span class="sec-num">02</span>
+          <span data-i18n="about.label">Hakkımda</span>
+          <span class="sec-rule"></span>
+        </div>
+
+        <div class="about-grid">
+          <div class="panel reveal">
+            <div class="panel-bar">
+              <span class="panel-name">about.md</span>
+              <span class="panel-meta">UTF-8 · LF</span>
+            </div>
+            <div class="panel-body">
+              <h2 data-i18n="about.title">Kısaca ben</h2>
+              <p data-i18n="about.p1">
+                Merhaba, ben Burhan. Backend tarafında Python ve Flask ile ölçeklenebilir sistemler
+                kurmayı; arayüz tarafında ise sade, hızlı ve erişilebilir web deneyimleri geliştirmeyi
+                seviyorum.
+              </p>
+              <p data-i18n="about.p2">
+                Sehven Dergi ve Hesaplarız.org gibi projelerimi uçtan uca tasarlayıp hayata
+                geçiriyorum: fikirden arayüze, veritabanından yayına kadar her aşamasında çalışıyorum.
+              </p>
+            </div>
+          </div>
+
+          <ul class="facts reveal">
+            <li>
+              <span class="fact-key" data-i18n="about.factLocation">Konum</span>
+              <span class="fact-value">Atakum, Samsun</span>
+            </li>
+            <li>
+              <span class="fact-key" data-i18n="about.factFocus">Odak</span>
+              <span class="fact-value" data-i18n="about.factFocusValue">Backend &amp; ürün geliştirme</span>
+            </li>
+            <li>
+              <span class="fact-key" data-i18n="about.factStatus">Durum</span>
+              <span class="fact-value" data-i18n="about.factStatusValue">Yeni fırsatlara açık</span>
+            </li>
+            <li>
+              <span class="fact-key">GitHub</span>
+              <span class="fact-value">@burhankaratas</span>
+            </li>
+            <li>
+              <span class="fact-key">Aka</span>
+              <span class="fact-value">Burhan Karataş · MBK</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- BLOG (yazı varsa gösterilir) -->
     <section id="blog" class="section" hidden>
       <div class="container">
         <div class="section-label reveal">
-          <span class="sec-num">04</span>
+          <span class="sec-num">03</span>
           <span data-i18n="blog.label">Blog</span>
           <span class="sec-rule"></span>
         </div>
@@ -625,8 +582,51 @@
       </div>
     </section>
 
+    <!-- YETENEKLER -->
+    <section id="yetenekler" class="section section-alt">
+      <div class="container">
+        <div class="section-label reveal">
+          <span class="sec-num" id="skills-sec-num">04</span>
+          <span data-i18n="skills.label">Yetenekler</span>
+          <span class="sec-rule"></span>
+        </div>
+
+        <h2 class="reveal" data-i18n="skills.title">Kullandığım teknolojiler</h2>
+        <p class="section-intro reveal" data-i18n="skills.intro">
+          Projelerimde düzenli olarak kullandığım diller, kütüphaneler ve araçlar.
+        </p>
+
+        <div class="skill-table reveal">
+          <div class="skill-row">
+            <span class="skill-key" data-i18n="skills.g1">Diller &amp; Web</span>
+            <ul class="chips" id="skills-web">
+              <li>HTML5</li><li>CSS3</li><li>JavaScript</li><li>React</li><li>Next.js</li><li>Node.js</li><li>Electron</li><li>Bootstrap</li>
+            </ul>
+          </div>
+          <div class="skill-row">
+            <span class="skill-key" data-i18n="skills.g2">Arka Uç</span>
+            <ul class="chips" id="skills-backend">
+              <li>Python</li><li>Flask</li><li>REST API</li><li>JWT</li><li>Jinja2</li><li>Flask-Mail</li><li>python-dotenv</li><li>Requests</li>
+            </ul>
+          </div>
+          <div class="skill-row">
+            <span class="skill-key" data-i18n="skills.g3">Veritabanı</span>
+            <ul class="chips" id="skills-db">
+              <li>MySQL</li><li>SQLite</li>
+            </ul>
+          </div>
+          <div class="skill-row">
+            <span class="skill-key" data-i18n="skills.g4">Araçlar &amp; Platform</span>
+            <ul class="chips" id="skills-tools">
+              <li>Git / GitHub</li><li>Vercel</li><li>Cloudflare</li><li>Figma</li><li>Vite</li><li>Linux</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- İLETİŞİM -->
-    <section id="iletisim" class="section section-alt">
+    <section id="iletisim" class="section">
       <div class="container">
         <div class="section-label reveal">
           <span class="sec-num" id="contact-sec-num">05</span>

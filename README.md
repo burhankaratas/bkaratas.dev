@@ -8,7 +8,7 @@ Vanilla HTML / CSS / JavaScript — statik site. Yönetim paneli ise Vercel Func
 
 | Dosya         | Açıklama                                  |
 | ------------- | ----------------------------------------- |
-| `index.html`  | Sayfanın tüm içeriği (Hero → Hakkımda → Yetenekler → Projeler → İletişim) + SEO/Open Graph meta + JSON-LD |
+| `index.html`  | Sayfanın tüm içeriği (Hero → Projeler → Hakkımda → Blog → Yetenekler → İletişim) + SEO/Open Graph meta + JSON-LD |
 | `styles.css`  | Koyu tema, responsive tasarım             |
 | `script.js`   | TR/EN dil değiştirici, mobil menü, scroll animasyonları |
 | `favicon.svg` | MBK monogram favicon                      |
