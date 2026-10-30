@@ -4,7 +4,7 @@ const I18N = {
   tr: {
     "meta.title": "Mahmut Burhan Karataş — Yazılım Geliştirici",
     "meta.description":
-      "Mahmut Burhan Karataş — temiz kod, otomasyon ve faydalı ürünler kuran yazılım geliştirici. Sehven Dergi, Hesaplarız.org ve açık kaynak projelerin arkasındaki isim.",
+      "Mahmut Burhan Karataş (Burhan Karataş) — Python, Flask ve Next.js ile ürün geliştiren yazılım geliştirici. Sehven, Hesaplarız.org ve açık kaynak projeler.",
 
     "a11y.skip": "İçeriğe geç",
 
@@ -28,6 +28,28 @@ const I18N = {
       "Merhaba, ben Burhan. Backend tarafında Python ve Flask ile ölçeklenebilir sistemler kurmayı; arayüz tarafında ise sade, hızlı ve erişilebilir web deneyimleri geliştirmeyi seviyorum.",
     "about.p2":
       "Sehven Dergi ve Hesaplarız.org gibi projelerimi uçtan uca tasarlayıp hayata geçiriyorum: fikirden arayüze, veritabanından yayına kadar her aşamasında çalışıyorum.",
+    "about.p3":
+      "Ürün geliştirirken önce problemi, kullanıcıyı ve başarı kriterini netleştiriyorum. Ardından çalışan en küçük sürümü yayına alıp geri bildirimle ilerliyorum. Kodun okunabilir, test edilebilir ve bakımı kolay olması benim için teslim tarihi kadar önemli. Birlikte çalışırken iletişimi açık tutar, belirsizlikleri erken konuşur ve teslim tarihlerini gerçekçi planlarım.",
+    "about.p4":
+      "Backend tarafında Python ve Flask ile API'ler, veritabanı modelleri ve kimlik doğrulama akışları kuruyorum; frontend tarafında Next.js, React ve vanilla JavaScript ile hızlı ve erişilebilir arayüzler geliştiriyorum. Otomasyon ve geliştirici deneyimi de işimin parçası: tekrarlayan görevleri scriptlere devretmek, deploy süreçlerini sadeleştirmek ve günlük iş akışını hızlandıran küçük araçlar üretmek. Dağıtım sonrası izleme ve bakım da sürecin doğal bir parçası.",
+    "about.p5":
+      "Şu anda kendi ürünlerimi geliştiriyor, açık kaynak projelere katkı sağlıyor ve yeni iş birliklerine açık kalıyorum. Yeni bir fikri sıfırdan tasarlamak, geliştirmek ve yayına almak için uygun ekiplerle tanışmayı seviyorum.",
+    "about.p6":
+      "Birlikte çalışacağımız projede kapsamı netleştirir, ilerlemeyi düzenli olarak paylaşır ve yayın sonrası destek için sürdürülebilir bir plan bırakırım. Amacım yalnızca çalışan bir ürün teslim etmek değil; onu rahatça kullanabileceğiniz ve gerektiğinde geliştirebileceğiniz bir temel bırakmak.",
+    "about.approachTitle": "Nasıl çalışırım",
+    "about.approachIntro": "Fikirden yayına giden süreçte izlediğim dört adım:",
+    "about.a1Title": "Problemi netleştir",
+    "about.a1":
+      "Kimin için, hangi sorunu ve hangi başarı kriterini çözdüğümüzü konuşarak tanımlarım.",
+    "about.a2Title": "Sade mimari kur",
+    "about.a2":
+      "Gereksiz bağımlılıklardan kaçınır, okunabilir ve bakımı kolay bir yapı kurarım.",
+    "about.a3Title": "Çalışan sürümü erken yayınla",
+    "about.a3":
+      "Küçük ama gerçek bir sürümü kullanıma açar, geri bildirimle sonraki adımlara yön veririm.",
+    "about.a4Title": "Yayın sonrası iyileştir",
+    "about.a4": "Ölçüm, hata takibi ve küçük iterasyonlarla ürünü olgunlaştırırım.",
+    "about.approachNote": "Her adımda şeffaf iletişim ve ölçülebilir çıktı hedeflerim.",
     "about.factLocation": "Konum",
     "about.factFocus": "Odak",
     "about.factFocusValue": "Backend & ürün geliştirme",
@@ -109,6 +131,28 @@ const I18N = {
       "Hi, I'm Burhan. I enjoy building scalable backend systems with Python and Flask, and crafting simple, fast and accessible experiences on the frontend.",
     "about.p2":
       "I design and ship my own projects end to end — from idea to interface, database to deployment — such as Sehven Magazine and Hesaplarız.org.",
+    "about.p3":
+      "When building a product, I start by clarifying the problem, the user and the success criteria. Then I ship the smallest working version and iterate with feedback. Readable, testable and maintainable code matters to me as much as the delivery date. I keep communication open, raise uncertainties early and plan timelines realistically.",
+    "about.p4":
+      "On the backend I build APIs, database models and authentication flows with Python and Flask; on the frontend I craft fast, accessible interfaces with Next.js, React and vanilla JavaScript. Automation and developer experience are part of the work too: moving repetitive tasks into scripts, simplifying deployments and building small tools that speed up everyday workflows. Monitoring and maintenance after launch are a natural part of the process.",
+    "about.p5":
+      "Right now I'm building my own products, contributing to open-source projects and staying open to new collaborations. I enjoy meeting the right teams to design, build and launch a new idea from scratch.",
+    "about.p6":
+      "In every project I clarify the scope, share progress regularly and leave a sustainable plan for post-launch support. My goal isn't just to deliver something that works; it's to leave a foundation you can use comfortably and extend when needed.",
+    "about.approachTitle": "How I work",
+    "about.approachIntro": "The four steps I follow from idea to launch:",
+    "about.a1Title": "Clarify the problem",
+    "about.a1":
+      "I define who it is for, which problem it solves and what success looks like — by talking it through.",
+    "about.a2Title": "Keep the architecture simple",
+    "about.a2":
+      "I avoid unnecessary dependencies and build a structure that is readable and easy to maintain.",
+    "about.a3Title": "Ship a working version early",
+    "about.a3":
+      "I put a small but real version into use and let feedback shape the next steps.",
+    "about.a4Title": "Improve after launch",
+    "about.a4": "I mature the product through measurement, error tracking and small iterations.",
+    "about.approachNote": "My goal at every step is transparent communication and measurable output.",
     "about.factLocation": "Location",
     "about.factFocus": "Focus",
     "about.factFocusValue": "Backend & product development",
@@ -168,7 +212,7 @@ const HTML_META = {
   tr: {
     title: "Mahmut Burhan Karataş — Yazılım Geliştirici",
     description:
-      "Mahmut Burhan Karataş — temiz kod, otomasyon ve faydalı ürünler kuran yazılım geliştirici. Sehven Dergi, Hesaplarız.org ve açık kaynak projelerin arkasındaki isim.",
+      "Mahmut Burhan Karataş (Burhan Karataş) — Python, Flask ve Next.js ile ürün geliştiren yazılım geliştirici. Sehven, Hesaplarız.org ve açık kaynak projeler.",
     ogLocale: "tr_TR",
   },
   en: {

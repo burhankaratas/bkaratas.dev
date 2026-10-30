@@ -573,6 +573,53 @@ p { margin: 0 0 1em; }
 
 .fact-value { font-size: 15.5px; }
 
+.about-approach { margin-top: 28px; }
+
+.approach-list {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.approach-list li {
+  display: flex;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.approach-list li:nth-child(odd) {
+  padding-right: 24px;
+  border-right: 1px solid var(--line);
+}
+
+.approach-list li:nth-child(even) { padding-left: 24px; }
+
+.approach-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--accent);
+}
+
+.approach-list h3 {
+  font-size: 1rem;
+  letter-spacing: 0;
+  margin: 0 0 4px;
+}
+
+.approach-list p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: none;
+}
+
+.approach-note { font-size: 14px; }
+
 /* ---------- Skills ---------- */
 
 .skill-table { border-top: 1px solid var(--line); }
@@ -905,6 +952,10 @@ p { margin: 0 0 1em; }
   .lang-switch button { padding: 6px 9px; }
 
   .section { padding: 64px 0; }
+
+  .approach-list { grid-template-columns: 1fr; }
+  .approach-list li:nth-child(odd) { padding-right: 0; border-right: 0; }
+  .approach-list li:nth-child(even) { padding-left: 0; }
 
   .hero {
     min-height: auto;
